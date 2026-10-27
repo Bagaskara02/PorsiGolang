@@ -924,7 +924,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         dashTopBtn.style.display = 'inline-block';
       }
 
-      let html = '<div class="d-flex flex-column gap-3">';
+      let html = '<div class="session-cards-list">';
       meals.forEach(m => {
         let sCal = 0, sP = 0, sC = 0, sF = 0;
         let foodChipsHtml = '';
@@ -951,7 +951,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         html += `
           <div class="history-session-card">
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <div class="d-flex align-items-center gap-1.5 flex-wrap">
+              <div class="session-header-left">
                 <span class="session-type-pill ${pillClass}">${m.name}</span>
                 <span class="session-time-pill"><i class="bi bi-clock me-1 text-muted" style="font-size: 11px;"></i>${m.meal_time}</span>
               </div>
@@ -971,7 +971,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
               </div>
             </div>
 
-            <div class="d-flex flex-wrap gap-1.5 mb-2.5">
+            <div class="session-food-chips">
               ${foodChipsHtml}
             </div>
 
@@ -1571,7 +1571,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
           return;
         }
 
-        let html = '<div class="d-flex flex-column gap-3">';
+        let html = '<div class="session-cards-list">';
         meals.forEach(m => {
           let sCal = 0, sP = 0, sC = 0, sF = 0;
           let foodChipsHtml = '';
@@ -1598,7 +1598,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
           html += `
             <div class="history-session-card">
               <div class="d-flex align-items-center justify-content-between mb-2">
-                <div class="d-flex align-items-center gap-1.5 flex-wrap">
+                <div class="session-header-left">
                   <span class="session-type-pill ${pillClass}">${m.name}</span>
                   <span class="session-time-pill"><i class="bi bi-clock me-1 text-muted" style="font-size: 11px;"></i>${m.meal_time}</span>
                 </div>
@@ -1618,7 +1618,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
                 </div>
               </div>
 
-              <div class="d-flex flex-wrap gap-1.5 mb-2.5">
+              <div class="session-food-chips">
                 ${foodChipsHtml}
               </div>
 
