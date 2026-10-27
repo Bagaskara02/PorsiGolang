@@ -68,7 +68,8 @@ func (h *Handler) Me(c *gin.Context) {
 
 func setAuthCookie(c *gin.Context, token string, maxAge int) {
 	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("access_token", token, maxAge, "/", "", c.Request.TLS != nil, true)
+	isSecure := c.Request.TLS != nil || c.Request.Header.Get("X-Forwarded-Proto") == "https"
+	c.SetCookie("access_token", token, maxAge, "/", "", isSecure, true)
 }
 
 func (h *Handler) Logout(c *gin.Context) {

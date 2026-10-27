@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"backend/internal/auth"
@@ -26,7 +28,9 @@ func setupEngine(db *gorm.DB, secret []byte) *gin.Engine {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:8081", "http://127.0.0.1:8081", "http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://localhost:5173"},
+		AllowOriginFunc: func(origin string) bool {
+			return true
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -60,6 +64,27 @@ func setupEngine(db *gorm.DB, secret []byte) *gin.Engine {
 	piringService := piring.NewService(piringRepo)
 	piringHandler := piring.NewHandler(piringService)
 	private.RegisterRoutes(r, authHandler.RequireAuth(), piringHandler)
+
+	// 4. Layani File Statis Frontend (Client)
+	clientDir := "./client"
+	if _, err := os.Stat(clientDir); os.IsNotExist(err) {
+		clientDir = "../client"
+	}
+	if _, err := os.Stat(clientDir); err == nil {
+		r.Static("/css", filepath.Join(clientDir, "css"))
+		r.Static("/js", filepath.Join(clientDir, "js"))
+		r.Static("/views", filepath.Join(clientDir, "views"))
+		r.StaticFile("/", filepath.Join(clientDir, "index.html"))
+		r.StaticFile("/index.html", filepath.Join(clientDir, "index.html"))
+
+		r.NoRoute(func(c *gin.Context) {
+			if strings.HasPrefix(c.Request.URL.Path, "/api") {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Endpoint tidak ditemukan"})
+				return
+			}
+			c.File(filepath.Join(clientDir, "index.html"))
+		})
+	}
 
 	return r
 }
