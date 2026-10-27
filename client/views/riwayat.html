@@ -1,0 +1,77 @@
+<!-- ==================== HALAMAN 4: RIWAYAT MAKAN (LOG HISTORI) ==================== -->
+<section id="page-riwayat" class="page-section d-none">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h4 fw-bold mb-0">Riwayat Catatan Makan</h1>
+      <p class="text-secondary small mb-0">Pilih tanggal untuk melihat riwayat makananmu.</p>
+    </div>
+    <div>
+      <input type="date" class="form-control form-control-sm" id="filter-date" onchange="handleHistoryDatePick(this.value)" style="width: auto;">
+    </div>
+  </div>
+
+  <!-- Banner Ringkasan Hari Terpilih -->
+  <div class="app-card p-3 p-md-4 mb-3" id="history-day-hero">
+    <!-- Baris 1: Header Tanggal & Status Target -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pb-3 border-bottom mb-3" style="border-color: #ECEEE8 !important;">
+      <div>
+        <div class="text-secondary small" style="font-size: 11.5px;">Tanggal Terpilih:</div>
+        <div class="fw-bold text-dark fs-6" id="history-selected-date-text">-</div>
+      </div>
+      <div class="text-end">
+        <div class="text-secondary small" style="font-size: 11.5px;">Status Target:</div>
+        <div class="fw-bold text-dark fs-6" id="history-day-status-pill">-</div>
+      </div>
+    </div>
+
+    <!-- Baris 2: Metrik Total Kalori & Rincian Makronutrien -->
+    <div class="row g-3 align-items-center">
+      <!-- Kolom Kiri: Progress Kalori Konsumsi vs Target -->
+      <div class="col-12 col-md-5">
+        <div class="d-flex justify-content-between align-items-baseline mb-1">
+          <span class="text-secondary small">Total Konsumsi</span>
+          <span class="text-secondary small" id="history-target-ref">Target: 0 kkal</span>
+        </div>
+        <div class="d-flex align-items-baseline gap-1.5 mb-2">
+          <span class="fs-3 fw-bold text-dark" id="history-day-total-cal">0</span>
+          <span class="text-secondary small fw-medium">kkal</span>
+          <span class="ms-auto small fw-semibold text-dark" id="history-day-cal-pct">0%</span>
+        </div>
+        <div class="progress" style="height: 6px; background: #EAECE6; border-radius: 99px;">
+          <div class="progress-bar" id="history-day-progress-bar" style="width: 0%; background: #55734B; border-radius: 99px; transition: width 0.35s ease;"></div>
+        </div>
+      </div>
+
+      <!-- Kolom Kanan: Rincian Gizi Makro Hari Itu (Macro Clean Grid serasi Dashboard) -->
+      <div class="col-12 col-md-7">
+        <div class="macro-clean-grid m-0">
+          <div class="macro-clean-col">
+            <span class="m-clean-lbl"><span class="macro-dot macro-dot-prot me-1" style="background-color: #55734B !important;"></span>Protein</span>
+            <span class="m-clean-val"><strong id="history-day-prot">0</strong> <small class="text-muted">g</small></span>
+          </div>
+          <div class="macro-clean-divider"></div>
+          <div class="macro-clean-col">
+            <span class="m-clean-lbl"><span class="macro-dot macro-dot-carb me-1" style="background-color: #E7A93B !important;"></span>Karbohidrat</span>
+            <span class="m-clean-val"><strong id="history-day-carb">0</strong> <small class="text-muted">g</small></span>
+          </div>
+          <div class="macro-clean-divider"></div>
+          <div class="macro-clean-col">
+            <span class="m-clean-lbl"><span class="macro-dot macro-dot-fat me-1" style="background-color: #A84135 !important;"></span>Lemak</span>
+            <span class="m-clean-val"><strong id="history-day-fat">0</strong> <small class="text-muted">g</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kontainer Log Sesi Riwayat -->
+  <div class="app-card p-3 p-md-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h6 fw-bold mb-0 text-dark">Daftar Sesi Makan</h2>
+      <span class="badge text-bg-light border px-2.5 py-1 text-secondary" style="font-size: 11.5px; border-radius: 9999px;" id="history-meal-count-badge">0 Sesi</span>
+    </div>
+    <div id="riwayat-container">
+      <!-- Konten riwayat makan dirender dinamis -->
+    </div>
+  </div>
+</section>

@@ -1,0 +1,134 @@
+<!-- ==================== HALAMAN 0: BERANDA / HOME (LANDING UTAMA) ==================== -->
+<section id="page-home" class="page-section">
+  <!-- Banner Hero Utama Porsi -->
+  <div class="hero-container">
+    <!-- Pita Teks Berjalan / Ticker Atas -->
+    <div class="hero-ribbon-ticker">
+      <span>• TINGGI PROTEIN</span>
+      <span>• RENDAH LEMAK</span>
+      <span>• 100+ MAKANAN NUSANTARA</span>
+      <span>• KALKULATOR BMR & TDEE</span>
+      <span>• POLA MAKAN SEIMBANG</span>
+      <span>• CATATAN PIRING HARIAN</span>
+      <span>• BEBAS GULA BERLEBIH</span>
+      <span>• NUTRISI ALAMI SEGAR</span>
+    </div>
+
+    <div class="row align-items-center hero-content-row g-4">
+      <div class="col-12 col-lg-7">
+        <!-- Judul Utama & Subjudul Hero -->
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class="hero-headline">
+          Ketahui Nutrisi Makananmu, <br class="d-none d-md-inline">
+          Capai <span class="highlight-gold">Energi Maksimal</span> Setiap Hari.
+        </h1>
+
+        <p class="hero-subtitle">
+          Eksplorasi kandungan kalori, protein, karbohidrat, dan lemak dari aneka kuliner nusantara. Hitung kebutuhan harian tubuhmu dan pantau porsi makan dengan praktis.
+        </p>
+
+        <!-- Kotak Pencarian Interaktif pada Banner Hero -->
+        <form onsubmit="searchFromHero(event); return false;" class="hero-search-box">
+          <i class="bi bi-search text-secondary ms-1"></i>
+          <input type="text" id="hero-search-input" placeholder="Cari makanan (misal: Nasi Goreng, Dada Ayam)..." aria-label="Cari Kandungan Nutrisi">
+          <button type="submit" class="btn-hero-search">
+            <span class="d-none d-sm-inline">Cari Nutrisi →</span>
+            <span class="d-inline d-sm-none">Cari →</span>
+          </button>
+        </form>
+
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" class="btn btn-olive px-4 py-2 fw-medium" onclick="openRegisterModal()">
+            <i class="bi bi-calculator me-1"></i> Hitung Target Kalori
+          </button>
+          <button type="button" class="btn btn-subtle px-3 py-2 fw-medium text-white border-white bg-transparent" onclick="switchPage('makanan')">
+            Lihat Katalog Makanan
+          </button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+
+      <div class="col-12 col-lg-5 text-center">
+        <div class="hero-food-plate">
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=700&auto=format&fit=crop&q=80" alt="Healthy Food Bowl" class="hero-plate-img" loading="lazy" onerror="this.src=FOOD_IMG_FALLBACK;">
+          <div class="hero-floating-stat hero-stat-1">
+            <i class="bi bi-check-circle-fill text-success fs-5"></i>
+            <div class="text-start">
+              <div class="fw-bold">100+ Menu Makanan</div>
+              <div class="text-secondary small">Protein, Karbohidrat, Lemak & Kalori</div>
+            </div>
+          </div>
+          <div class="hero-floating-stat hero-stat-2">
+            <i class="bi bi-heart-pulse-fill text-danger fs-5"></i>
+            <div class="text-start">
+              <div class="fw-bold">BMR & TDEE Akurat</div>
+              <div class="text-secondary small">Formula Harris-Benedict</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transisi Gelombang SVG Halus ke Latar Belakang #F7F7F2 -->
+    <div class="hero-wave-transition">
+      <svg viewBox="0 0 1440 38" fill="none" preserveAspectRatio="none">
+        <path d="M0,0 C360,35 1080,35 1440,0 L1440,38 L0,38 Z" fill="#F7F7F2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 3 Kartu Nilai Keunggulan Utama Aplikasi -->
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="home-feature-card">
+        <div class="feature-icon-bubble">
+          <i class="bi bi-search"></i>
+        </div>
+        <h2 class="h6 fw-bold mb-1 text-dark">Katalog Gizi Terpercaya</h2>
+        <p class="text-secondary small mb-0">Temukan takaran kalori, protein, karbohidrat, dan lemak akurat per 100 gram dari 100+ bahan makanan dan kuliner nusantara.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="home-feature-card">
+        <div class="feature-icon-bubble">
+          <i class="bi bi-calculator"></i>
+        </div>
+        <h2 class="h6 fw-bold mb-1 text-dark">Kalkulator Kalori Personal</h2>
+        <p class="text-secondary small mb-0">Hitung kebutuhan energi harian berbasis sains berdasarkan tinggi badan, berat badan, usia, jenis kelamin, dan tingkat aktivitas fisik.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="home-feature-card">
+        <div class="feature-icon-bubble">
+          <i class="bi bi-pie-chart"></i>
+        </div>
+        <h2 class="h6 fw-bold mb-1 text-dark">Pencatatan Piring Harian</h2>
+        <p class="text-secondary small mb-0">Catat menu sarapan, makan siang, makan malam, dan camilan dengan visual progress bar target kalori yang rapi dan mudah.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bagian Pratinjau Makanan Populer Pilihan -->
+  <div class="app-card p-3 p-md-4 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+      <div>
+        <h3 class="h5 fw-bold mb-1.5">Rekomendasi Makanan Favorit</h3>
+        <p class="text-secondary small mb-0">Makanan favorit dari para pengguna</p>
+      </div>
+      <button type="button" class="btn btn-subtle btn-sm fw-medium" onclick="switchPage('makanan')">
+        Buka Katalog Lengkap <i class="bi bi-arrow-right ms-1"></i>
+      </button>
+    </div>
+
+    <div class="row row-cols-2 row-cols-md-4 g-2 g-md-3" id="home-featured-grid">
+      <!-- Diisi secara dinamis melalui JavaScript -->
+    </div>
+  </div>
+</section>

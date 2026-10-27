@@ -1,0 +1,48 @@
+<!-- ==================== HALAMAN 1: KATALOG MAKANAN ==================== -->
+<section id="page-makanan" class="page-section d-none">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h4 fw-bold mb-0">Katalog Makanan</h1>
+      <p class="text-secondary small mb-0">Nilai gizi per 100 gram bahan pangan.</p>
+    </div>
+  </div>
+
+  <!-- Banner Penawaran Tamu (Arahkan Hitung Kalori ke Registrasi) -->
+  <div id="catalog-guest-card" class="app-card p-3 p-md-4 mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3" style="background: #FFFFFF;">
+    <div>
+      <div class="fw-semibold text-dark" style="font-size: 14px;">Ingin Menghitung Target Kalori Harianmu?</div>
+      <div class="text-secondary small">Daftarkan data tubuhmu untuk menghitung BMR dan kebutuhan kalori harian secara otomatis.</div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-olive px-3 py-2 fw-medium text-nowrap" onclick="openRegisterModal()">
+        Hitung Kalori
+      </button>
+    </div>
+  </div>
+
+  <!-- Toolbar Pencarian (Kapsul Terpadu dengan Tombol Hapus Input) -->
+  <div class="row mb-4">
+    <div class="col-12 col-md-8 col-lg-7">
+      <div class="search-container">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="search-food-input" placeholder="Cari makanan (misal: nasi goreng, ayam, soto, telur)..." oninput="handleCatalogSearchInput(this.value)">
+        <button class="search-clear-btn" id="btn-clear-search" type="button" onclick="clearCatalogSearch()" title="Hapus pencarian" style="display: none;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid Tampilan Kartu Makanan -->
+  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2 g-md-3 mb-3" id="food-catalog-grid">
+    <!-- Dirender secara dinamis oleh JavaScript -->
+  </div>
+
+  <!-- Kontainer Paginasi Bernomor Modern -->
+  <div class="catalog-pagination-wrap d-flex flex-wrap justify-content-between align-items-center gap-2 pt-3 mt-3 border-top">
+    <span class="text-secondary small" id="pagination-info">Memuat halaman...</span>
+    <div class="d-flex align-items-center gap-1 flex-wrap" id="pagination-buttons-container">
+      <!-- Dirender secara dinamis oleh JavaScript -->
+    </div>
+  </div>
+</section>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Porsi.</title>
+
+  <!-- Font Google: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Kerangka Kerja Bootstrap 5.3 & Ikon Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Lembar Gaya Kustom Terstruktur -->
+  <link rel="stylesheet" href="css/style.css?v=24">
+  <link rel="stylesheet" href="css/auth.css?v=18">
+</head>
+<body>
+
+  <!-- Bilah Navigasi Melayang Bentuk Kapsul (Floating Island Navbar) -->
+  <header class="app-navbar-wrapper">
+    <div class="app-navbar-pill">
+      <!-- Sisi Kiri: Logo & Nama Brand -->
+      <a href="#" class="brand-logo" onclick="switchPage('home'); return false;">
+        <span class="brand-title">porsi<span class="brand-dot">.</span></span>
+      </a>
+
+      <!-- Sisi Tengah: Tab Navigasi Menu (Web Desktop Navigasi Kapsul) -->
+      <nav class="desktop-nav nav-center-tabs" id="nav-center-tabs" aria-label="Navigasi Utama">
+        <div class="nav-sliding-indicator" id="nav-sliding-indicator"></div>
+        <button type="button" class="nav-tab-btn active" id="nav-btn-home" onclick="switchPage('home')">
+          Home
+        </button>
+        <button type="button" class="nav-tab-btn" id="nav-btn-makanan" onclick="switchPage('makanan')">
+          Makanan
+        </button>
+        <button type="button" class="nav-tab-btn" id="nav-btn-catat" onclick="requireAuthOrGo('catat')">
+          Catat
+        </button>
+        <button type="button" class="nav-tab-btn" id="nav-btn-dashboard" onclick="requireAuthOrGo('dashboard')">
+          Ringkasan
+        </button>
+        <button type="button" class="nav-tab-btn" id="nav-btn-riwayat" onclick="requireAuthOrGo('riwayat')">
+          Riwayat
+        </button>
+      </nav>
+
+      <!-- Sisi Kanan: Tombol Aksi Pengguna / Tamu -->
+      <div class="nav-right-actions">
+        <!-- Aksi untuk Tamu (Belum Masuk Akun) -->
+        <div id="guest-actions" class="d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-nav-ghost" onclick="openLoginModal()">Masuk</button>
+          <button type="button" class="btn btn-nav-cta" onclick="openRegisterModal()">
+            <span>Mulai</span> <i class="bi bi-arrow-right-short ms-1" style="font-size: 16px;"></i>
+          </button>
+        </div>
+
+        <!-- Aksi Pengguna (Sudah Terautentikasi / Login) -->
+        <div id="user-actions" class="d-none align-items-center gap-2">
+          <div class="nav-user-pill" onclick="requireAuthOrGo('profil')" title="Lihat Profil">
+            <div class="nav-user-avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="d-none d-sm-block text-start" style="line-height: 1.15;">
+              <div class="fw-semibold" style="font-size: 12px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="top-user-name">User</div>
+              <div class="text-secondary" style="font-size: 10.5px;" id="top-user-target">0 kkal</div>
+            </div>
+          </div>
+          <button type="button" class="btn-nav-logout" onclick="logout()" title="Keluar">
+            <i class="bi bi-box-arrow-right" style="-webkit-text-stroke: 0.5px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Kontainer Konten Utama Aplikasi (Dimuat per view dari folder views/) -->
+  <main class="container-lg py-3 py-md-4" id="main-content">
+    <div id="view-home"></div>
+    <div id="view-makanan"></div>
+    <div id="view-dashboard"></div>
+    <div id="view-catat"></div>
+    <div id="view-riwayat"></div>
+    <div id="view-profil"></div>
+  </main>
+
+  <!-- Kontainer Komponen Modal & Toast (Dimuat dari views/modals.html) -->
+  <div id="views-modals"></div>
+
+  <!-- Pustaka JavaScript Bootstrap 5 Bundle CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Berkas Logika Utama Aplikasi (JavaScript Terstruktur) -->
+  <script src="js/app.js?v=27"></script>
+</body>
+</html>

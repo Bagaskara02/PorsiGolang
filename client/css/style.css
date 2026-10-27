@@ -1,0 +1,1671 @@
+/**
+ * ============================================================================
+ * PORSI. - Pelacak Nutrisi & Kalori Harian
+ * Lembar Gaya Utama (style.css)
+ * ============================================================================
+ * 
+ * Daftar Isi:
+ * 1. Token Desain & Variabel Root (Warna, Radius, Font)
+ * 2. Tipografi Dasar & Reset Elemen
+ * 3. Navigasi Melayang Bentuk Kapsul (Floating Island Pill Navbar)
+ * 4. Kartu & Lencana Kustom
+ * 5. Kartu Katalog Makanan & Grid Nutrisi Makro Bersih
+ * 6. Paginasi Halaman Bernomor Modern
+ * 7. Bagian Hero Beranda (Home / Ticker / Gelombang SVG)
+ * 8. Kartu Keunggulan Fitur Utama
+ * 9. Bilah Navigasi Bawah Seluler & Aturan Responsif
+ * ============================================================================
+ */
+
+:root {
+      --bg: #F7F7F2;
+      --card-bg: #FFFFFF;
+      --border: #E3E5DE;
+      --text: #20251F;
+      --muted: #6B7168;
+      --olive: #55734B;
+      --olive-hover: #435D3A;
+      --olive-light: #E7EDE1;
+      --danger: #A84135;
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13.5px;
+      line-height: 1.5;
+      margin: 0;
+      padding-bottom: 60px;
+    }
+
+    /* 1. Navigasi Melayang Bentuk Kapsul (Floating Island Pill Navbar) */
+    .app-navbar-wrapper {
+      position: sticky;
+      top: 14px;
+      z-index: 1030;
+      padding: 0 16px;
+      margin-bottom: 8px;
+    }
+
+    .app-navbar-pill {
+      max-width: 1080px;
+      margin: 0 auto;
+      margin-bottom: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(215, 222, 210, 0.9);
+      border-radius: 9999px;
+      box-shadow: 
+        0 16px 36px -4px rgba(0, 0, 0, 0.18), 
+        0 6px 16px -2px rgba(0, 0, 0, 0.10), 
+        inset 0 1px 1px rgba(255, 255, 255, 0.95);
+      padding: 6px 8px 6px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      min-height: 54px;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      z-index: 2;
+    }
+
+    .brand-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--olive-light);
+      color: var(--olive);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .brand-logo:hover .brand-badge {
+      transform: scale(1.08) rotate(8deg);
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--text);
+      letter-spacing: -0.6px;
+      line-height: 1;
+    }
+    .brand-dot {
+      color: var(--olive);
+    }
+
+    /* 2. Tab Navigasi Tengah (Web Desktop Navigasi Kapsul) */
+    .nav-center-tabs {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      background: #EEF2EB;
+      padding: 3px;
+      border-radius: 9999px;
+      border: 1px solid rgba(215, 222, 210, 0.7);
+    }
+
+    /* Indikator Kapsul Geser Halus (Sliding Pill Indicator seperti Modal Auth) */
+    .nav-sliding-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #FFFFFF;
+      border-radius: 9999px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: transform 0.36s cubic-bezier(0.25, 1, 0.5, 1), width 0.36s cubic-bezier(0.25, 1, 0.5, 1), height 0.36s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+      will-change: transform, width, height;
+    }
+
+    .nav-tab-btn {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 13.5px;
+      border: 0;
+      background: transparent !important;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: color 0.25s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      position: relative;
+      z-index: 2;
+    }
+    .nav-tab-btn:hover {
+      color: var(--text);
+    }
+    .nav-tab-btn.active {
+      color: #1F2937;
+      font-weight: 600;
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+    .nav-tab-btn.active::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--olive);
+      margin-right: 2px;
+      animation: dotPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes dotPop {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Mencegah scrollbar horizontal pada kontainer utama saat animasi geser tab berlangsung */
+    main.container-lg {
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animasi Geser Halus Halaman Masuk dari Kanan (Arah Maju) */
+    .page-slide-from-right {
+      animation: pageSlideRight 0.36s cubic-bezier(0.25, 1, 0.5, 1) both;
+      will-change: opacity, transform;
+    }
+
+    /* Animasi Geser Halus Halaman Masuk dari Kiri (Arah Mundur) */
+    .page-slide-from-left {
+      animation: pageSlideLeft 0.36s cubic-bezier(0.25, 1, 0.5, 1) both;
+      will-change: opacity, transform;
+    }
+
+    @keyframes pageSlideRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pageSlideLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* 3. Aksi Sisi Kanan (Masuk, Mulai, Profil) */
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .btn-nav-ghost {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 13px;
+      padding: 7px 14px;
+      border-radius: 9999px;
+      transition: background 0.15s ease, color 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-nav-ghost:hover {
+      background: #F1F3ED;
+      color: var(--text);
+    }
+
+    .btn-nav-cta {
+      background: #1B211A;
+      color: #FFFFFF;
+      border: 1px solid #1B211A;
+      font-weight: 500;
+      font-size: 13px;
+      padding: 7px 18px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+      text-decoration: none;
+    }
+    .btn-nav-cta:hover {
+      background: #313D2F;
+      border-color: #313D2F;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 4. Kapsul Profil Pengguna Terautentikasi */
+    .nav-user-pill {
+      background: #F4F6F0;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 3px 12px 3px 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .nav-user-pill:hover {
+      background: #E9ECE3;
+    }
+
+    .nav-user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--olive);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .btn-nav-logout {
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      color: var(--danger);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .btn-nav-logout:hover {
+      background: rgba(168, 65, 53, 0.1);
+      color: #8B2E24;
+      border-color: rgba(168, 65, 53, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* 5. Bilah Pencarian Modern & Bersih */
+    .search-container {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 14px 6px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 50px;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .search-container:hover {
+      border-color: #CBD0C4;
+    }
+    .search-container:focus-within {
+      border-color: var(--olive);
+      box-shadow: 0 0 0 3px rgba(85, 115, 75, 0.15);
+    }
+    .search-container .search-icon {
+      color: var(--muted);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .search-container input {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      font-size: 14px;
+      width: 100%;
+      color: var(--text);
+      padding: 4px 0;
+    }
+    .search-container input::placeholder {
+      color: #9CA3AF;
+      font-size: 13.5px;
+    }
+    .search-clear-btn {
+      border: none;
+      background: #F0F1EB;
+      color: var(--muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .search-clear-btn:hover {
+      background: #E2E4DC;
+      color: var(--text);
+    }
+
+    /* 6. Kartu Kontainer Kustom */
+    .app-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* 7. Tombol Aksi Kustom */
+    .btn-olive {
+      background-color: var(--olive);
+      border: 1px solid var(--olive);
+      color: #FFFFFF;
+      font-weight: 500;
+      font-size: 13px;
+      border-radius: 6px;
+      padding: 6px 14px;
+      transition: all 0.15s;
+    }
+    .btn-olive:hover, .btn-olive:focus {
+      background-color: var(--olive-hover);
+      border-color: var(--olive-hover);
+      color: #FFFFFF;
+    }
+
+    .btn-subtle {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500;
+      font-size: 13px;
+      border-radius: 6px;
+      padding: 6px 12px;
+    }
+    .btn-subtle:hover {
+      background-color: #F0F1EB;
+      color: var(--text);
+    }
+
+    /* 8. Kolom Formulir & Input */
+    .form-control, .form-select {
+      font-family: inherit;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--olive);
+      box-shadow: 0 0 0 2px rgba(85, 115, 75, 0.15);
+    }
+    .form-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      color: var(--text);
+    }
+
+    /* 9. Kartu Katalog Makanan */
+    .food-item-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #FFFFFF;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: border-color 0.15s;
+    }
+    .food-item-card:hover {
+      border-color: #CBD0C4;
+    }
+    .food-item-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      background: #EAECE6;
+    }
+    .food-item-body {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .food-item-title {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    /* 10. Tampilan Kalori Kartu Makanan */
+    .food-card-cal {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .food-card-cal small {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    /* 11. Makronutrisi Kartu Makanan: Bersih & Netral (Tanpa Kotak Berwarna) */
+    .macro-clean-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 2px;
+      margin-bottom: 10px;
+      border-top: 1px solid #ECEEE8;
+      border-bottom: 1px solid #ECEEE8;
+      background: transparent !important;
+    }
+    .macro-clean-col {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .m-clean-lbl {
+      font-size: 10px;
+      color: #6F766C;
+      font-weight: 500;
+      letter-spacing: -0.1px;
+    }
+    .m-clean-val {
+      font-size: 12px;
+      color: #1F251E;
+      line-height: 1.2;
+    }
+    .m-clean-val strong {
+      font-weight: 700;
+      color: #1F251E;
+    }
+    .m-clean-val span {
+      font-size: 9.5px;
+      font-weight: 400;
+      color: #6F766C;
+    }
+    .macro-clean-divider {
+      width: 1px;
+      height: 20px;
+      background: #ECEEE8;
+      flex-shrink: 0;
+    }
+
+    /* 12. Paginasi Halaman Bernomor Modern */
+    .btn-page-nav {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 9999px;
+      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+    .btn-page-nav:hover:not(:disabled) {
+      background: #E8EDE3;
+      border-color: #CBD5C4;
+      color: var(--text);
+    }
+    .btn-page-nav:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #F4F5F0;
+    }
+
+    .btn-page-num {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 6px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+    .btn-page-num:hover:not(.active) {
+      background: #E8EDE3;
+      color: var(--text);
+    }
+    .btn-page-num.active {
+      background: var(--olive);
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(85, 115, 75, 0.35);
+    }
+    .page-ellipsis {
+      padding: 0 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* 13. Bagian Hero Beranda (Home) */
+    .hero-container {
+      background: linear-gradient(165deg, #162E20 0%, #1E3E2B 45%, #294D37 75%, #355A41 100%);
+      border-radius: 24px;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 16px 40px -10px rgba(18, 40, 24, 0.28);
+    }
+
+    .hero-ribbon-ticker {
+      background: #E7A93B;
+      color: #172B1A;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      display: flex;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .hero-ribbon-ticker span {
+      display: inline-block;
+      padding: 0 14px;
+    }
+
+    .hero-content-row {
+      padding: 36px 32px 24px 36px;
+    }
+
+    @media (max-width: 767.98px) {
+      .hero-content-row {
+        padding: 22px 18px 18px 18px;
+      }
+    }
+
+    .hero-headline {
+      font-weight: 800;
+      font-size: clamp(1.75rem, 3.2vw, 2.65rem);
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+      color: #FFFFFF;
+    }
+    .hero-headline .highlight-gold {
+      color: #F8CB58;
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(13px, 1.35vw, 14.5px);
+      line-height: 1.6;
+      color: #D3DFD3;
+      max-width: 520px;
+      margin-bottom: 22px;
+    }
+
+    .hero-search-box {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 9999px;
+      padding: 6px 8px 6px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 480px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+    .hero-search-box input {
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      width: 100%;
+      font-size: 13.5px;
+      color: #1A281A;
+    }
+    .hero-search-box input::placeholder {
+      color: #8C968B;
+    }
+    .hero-search-box .btn-hero-search {
+      background: #162E20;
+      color: #FFFFFF;
+      border: none;
+      font-weight: 600;
+      font-size: 12.5px;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+    .hero-search-box .btn-hero-search:hover {
+      background: #254933;
+    }
+
+    .hero-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .hero-chip {
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hero-food-plate {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-plate-img {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s ease;
+    }
+    .hero-plate-img:hover {
+      transform: scale(1.02) rotate(2deg);
+    }
+
+    .hero-floating-stat {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      color: #1A281A;
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 7px 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      animation: floatBadge 3.5s ease-in-out infinite alternate;
+    }
+    .hero-stat-1 {
+      top: 10%;
+      left: -10px;
+    }
+    .hero-stat-2 {
+      bottom: 8%;
+      right: -5px;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-7px); }
+    }
+
+    .hero-wave-transition {
+      width: 100%;
+      line-height: 0;
+      margin-top: -1px;
+    }
+    .hero-wave-transition svg {
+      display: block;
+      width: 100%;
+      height: 38px;
+    }
+
+    .home-feature-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      height: 100%;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .home-feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border-color: #CBD5C4;
+    }
+    .feature-icon-bubble {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--olive-light);
+      color: var(--olive);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      margin-bottom: 12px;
+    }
+
+    /* 14. Penyesuaian Responsif Layar Kecil */
+    @media (max-width: 767.98px) {
+      .food-item-img {
+        height: 100px;
+      }
+    }
+
+
+    /* ============================================================================
+     * 15. Gaya Komponen Tambahan untuk Tab (Piring, Riwayat & Profil)
+     * ============================================================================
+     */
+
+    /* Efek & Warna Tombol Aksi Bahaya / Hapus (Warna Lemak Maroon Porsi) */
+    .btn-subtle.text-danger {
+      color: var(--danger) !important;
+    }
+    .btn-subtle.text-danger:hover {
+      background-color: rgba(168, 65, 53, 0.1) !important;
+      color: #8B2E24 !important;
+      border-color: rgba(168, 65, 53, 0.3) !important;
+    }
+
+    /* Bilah Progres Multi-Segmen Makronutrien Piring (Sesuai Palet Warna Porsi) */
+    .plate-macro-bar-container {
+      display: flex;
+      height: 8px;
+      width: 100%;
+      border-radius: 99px;
+      overflow: hidden;
+      background: #EBEFE7;
+      border: 1px solid #D8DED1;
+      gap: 2px;
+      padding: 1px;
+    }
+    .plate-macro-bar-seg {
+      height: 100%;
+      transition: width 0.3s ease;
+      border-radius: 99px;
+    }
+    .plate-macro-bar-seg.bg-prot {
+      background: var(--olive); /* Hijau Zaitun Utama Porsi (#55734B) */
+    }
+    .plate-macro-bar-seg.bg-carb {
+      background: #E7A93B; /* Kuning Oker Gandum Alami (Pita Ticker Hero) */
+    }
+    .plate-macro-bar-seg.bg-fat {
+      background: var(--danger); /* Terakota Hangat Porsi (#A84135) */
+    }
+
+    /* Baris Item Sesi Makan Terpadu (Ringkasan, Catat, & Riwayat) */
+    .session-item-row {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    }
+    .session-item-row:hover {
+      border-color: #CBD5C4;
+      background: #FAFBF9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Stepper Porsi Makanan pada Piring */
+    .portion-stepper-widget {
+      display: inline-flex;
+      align-items: center;
+      background: #F8F9F6;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2px 4px;
+      gap: 2px;
+    }
+    .btn-stepper-adj {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.14s ease;
+    }
+    .btn-stepper-adj:hover {
+      background: var(--olive);
+      color: #FFFFFF;
+      border-color: var(--olive);
+    }
+    .btn-stepper-adj:active {
+      transform: scale(0.90);
+    }
+    .stepper-num-input {
+      width: 50px;
+      border: 0;
+      background: transparent;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--text);
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .stepper-num-input::-webkit-outer-spin-button,
+    .stepper-num-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .stepper-unit {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      padding-right: 4px;
+    }
+
+    /* Bilah Strip Kalender 7 Hari Terakhir (Riwayat) */
+    .cal-week-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+    .cal-day-card {
+      flex: 1;
+      min-width: 66px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      user-select: none;
+    }
+    .cal-day-card:hover:not(.active) {
+      border-color: #CBD5C4;
+      background: #F4F6F2;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+    .cal-day-card.active {
+      background: var(--olive);
+      border-color: var(--olive);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(85, 115, 75, 0.25);
+      transform: translateY(-2px);
+    }
+    .cal-day-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .cal-day-card.active .cal-day-name {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .cal-day-num {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .cal-day-card.active .cal-day-num {
+      color: #FFFFFF;
+    }
+
+    /* ============================================================================
+     * 15. RIWAYAT MAKAN: DESAIN RESIK, MODERN & BEBAS EMOJI (NON-AI SLOP)
+     * ============================================================================ */
+    .history-calendar-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--olive-light);
+      color: var(--olive);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .history-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .history-status-badge.status-match {
+      background: #EDF5EA;
+      color: #2E5626;
+      border: 1px solid #D2E4CC;
+    }
+    .history-status-badge.status-deficit {
+      background: #FAF4E8;
+      color: #8C6018;
+      border: 1px solid #EFE2C6;
+    }
+    .history-status-badge.status-surplus {
+      background: #FDF1F0;
+      color: #9C2E23;
+      border: 1px solid #F6D5D3;
+    }
+
+    .history-session-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 15px;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+    }
+    .history-session-card:hover {
+      border-color: #CBD5C4;
+      background: #FCFDFB;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .session-type-pill {
+      font-weight: 600;
+      font-size: 11.5px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: -0.1px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .session-pill-sarapan {
+      background: #F4F6F1;
+      color: #384A33;
+      border: 1px solid #DCE3D6;
+    }
+    .session-pill-siang {
+      background: #EDF4EA;
+      color: #274722;
+      border: 1px solid #D1E1CB;
+    }
+    .session-pill-malam {
+      background: #F0F3F7;
+      color: #263A50;
+      border: 1px solid #D6DFEB;
+    }
+    .session-pill-camilan {
+      background: #FAF3EE;
+      color: #6E3B24;
+      border: 1px solid #ECDAD0;
+    }
+    .session-pill-kustom {
+      background: #F5F6F3;
+      color: #353B32;
+      border: 1px solid #E0E4DC;
+    }
+
+    .session-time-pill {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .session-food-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #F7F9F5;
+      border: 1px solid #E5E9E0;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 12px;
+      color: #242E22;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .session-food-chip:hover {
+      background: #EFF3EC;
+      border-color: #D6DFD0;
+    }
+    .session-food-chip .food-chip-name {
+      font-weight: 500;
+    }
+    .session-food-chip .food-chip-gram {
+      color: #7A8475;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .session-macro-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11.5px;
+      color: #555E51;
+    }
+
+    .macro-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .macro-dot-prot {
+      background: #55734B !important;
+    }
+    .macro-dot-carb {
+      background: #E7A93B !important;
+    }
+    .macro-dot-fat {
+      background: #A84135 !important;
+    }
+
+    /* Avatar Pengguna Profil */
+    .profile-avatar-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--olive) 0%, #3D5335 100%);
+      color: #FFFFFF;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(85, 115, 75, 0.25);
+      border: 2px solid #FFFFFF;
+    }
+
+    /* Lencana Status BMI */
+    .badge-bmi-ideal { background: #EDF6EE; color: #2E6930; border: 1px solid #C8E6C9; }
+    .badge-bmi-under { background: #FEF9C3; color: #854D0E; border: 1px solid #FEF08A; }
+    .badge-bmi-over  { background: #FFEDD5; color: #9A3412; border: 1px solid #FED7AA; }
+    .badge-bmi-obese { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+
+    /* Tombol Pilihan Sesi Cepat */
+    .meal-preset-pill {
+      font-size: 12.5px;
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .meal-preset-pill:hover {
+      transform: translateY(-1px);
+    }
+
+    /* Butir Pemilih Makanan Interaktif di Modal */
+    .picker-food-item {
+      transition: background-color 0.15s ease;
+      border-bottom: 1px solid #F1F4EE !important;
+    }
+    .picker-food-item:hover {
+      background-color: #F8F9F5 !important;
+    }
+
+    /* Tombol Aksi Hapus Berbentuk Lingkaran Sempurna (Background Putih & Ikon Lemak Maroon) */
+    .btn-trash-circle {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      min-height: 34px !important;
+      border-radius: 50% !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      background-color: #FFFFFF !important;
+      border: 1px solid var(--border) !important;
+      color: var(--danger) !important;
+      transition: all 0.15s ease;
+    }
+    .btn-trash-circle:hover {
+      background-color: rgba(168, 65, 53, 0.1) !important;
+      color: #8B2E24 !important;
+      border-color: rgba(168, 65, 53, 0.3) !important;
+    }
+
+    /* Tombol Aksi Edit Berbentuk Lingkaran Sempurna (Background Putih & Ikon Zaitun Porsi) */
+    .btn-edit-circle {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      min-height: 34px !important;
+      border-radius: 50% !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      background-color: #FFFFFF !important;
+      border: 1px solid var(--border) !important;
+      transition: all 0.15s ease;
+      color: var(--olive) !important;
+    }
+    .btn-edit-circle:hover {
+      background-color: rgba(85, 115, 75, 0.12) !important;
+      color: #3D5335 !important;
+      border-color: rgba(85, 115, 75, 0.3) !important;
+    }
+
+    /* Grup Tombol Aksi Sesi (Edit & Hapus Selalu Berdampingan Rapi Tanpa Celah Lebar) */
+    .session-actions-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================================
+     * 16. SISTEM RESPONTIF UNIVERSAL (SMARTPHONE TIPE APAPUN & SEMUA RESOLUSI)
+     * ============================================================================
+     * Mendukung:
+     * - Smartphone ultra-kompak (320px - 360px: iPhone SE 1, Galaxy Mini)
+     * - Smartphone standar (375px - 414px: iPhone SE 2/3, 11/12/13/14/15/16, Pixel, Galaxy S)
+     * - Smartphone layar lebar (428px - 480px: iPhone Pro Max, Galaxy Plus/Ultra)
+     * - Tablet portrait & landscape (768px - 991px: iPad Mini, iPad Air, Galaxy Tab)
+     * - Laptop & Desktop (>= 992px)
+     * ============================================================================
+     */
+
+    /* --- Tablet & Layar Menengah (<= 991.98px) --- */
+    @media (max-width: 991.98px) {
+      .app-navbar-wrapper {
+        top: 8px;
+        padding: 0 12px;
+        margin-bottom: 12px;
+      }
+      .app-navbar-pill {
+        border-radius: 24px;
+        padding: 10px 14px;
+        flex-wrap: wrap;
+        row-gap: 8px;
+        min-height: auto;
+      }
+      .brand-logo {
+        order: 1;
+      }
+      .nav-right-actions {
+        order: 2;
+        margin-left: auto;
+      }
+      .nav-center-tabs {
+        order: 3;
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-top: 2px;
+        padding: 3px;
+        border-radius: 9999px;
+      }
+      .nav-center-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .nav-tab-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        justify-content: center;
+        padding: 6px 10px;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .hero-content-row {
+        padding: 28px 24px !important;
+        text-align: center;
+      }
+      .hero-search-box {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-content-row .d-flex.flex-wrap {
+        justify-content: center;
+      }
+    }
+
+    /* --- Smartphone Standar & Tablet Portabel (<= 767.98px) --- */
+    @media (max-width: 767.98px) {
+      body {
+        padding-bottom: 45px;
+      }
+      .app-navbar-wrapper {
+        top: 6px;
+        padding: 0 8px;
+        margin-bottom: 8px;
+      }
+      .app-navbar-pill {
+        padding: 8px 10px;
+        border-radius: 20px;
+        row-gap: 6px;
+        box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.14);
+      }
+      .brand-title {
+        font-size: 1.25rem;
+      }
+      .nav-tab-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        justify-content: center;
+        padding: 5px 8px;
+        font-size: 12px;
+        gap: 3px;
+        white-space: nowrap;
+      }
+      .nav-tab-btn.active::before {
+        width: 4px;
+        height: 4px;
+      }
+      .nav-user-pill {
+        padding: 3px 10px 3px 5px;
+        gap: 6px;
+      }
+      .nav-user-pill #top-user-name {
+        max-width: 80px;
+      }
+
+      /* Hero Section Smartphone */
+      .hero-container {
+        border-radius: 20px;
+      }
+      .hero-content-row {
+        padding: 22px 16px 18px 16px !important;
+      }
+      .hero-headline {
+        font-size: 1.6rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 10px !important;
+      }
+      .hero-subtitle {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+        margin-bottom: 14px !important;
+      }
+      .hero-search-box {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        border-radius: 9999px !important;
+        max-width: 100% !important;
+        padding: 5px 6px 5px 14px !important;
+        margin-bottom: 14px !important;
+        gap: 8px !important;
+      }
+      .hero-search-box input {
+        font-size: 12.5px !important;
+        text-align: left !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+      }
+      .hero-search-box .btn-hero-search {
+        padding: 7px 14px !important;
+        font-size: 11.5px !important;
+        width: auto !important;
+        border-radius: 9999px !important;
+        white-space: nowrap !important;
+      }
+      .hero-food-plate {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+      }
+      .hero-plate-img {
+        max-width: 220px !important;
+      }
+      .hero-floating-stat {
+        position: static !important;
+        display: inline-flex !important;
+        margin: 4px auto !important;
+        max-width: 95% !important;
+        font-size: 11px !important;
+        animation: none !important;
+      }
+      .hero-ribbon-ticker {
+        font-size: 10px;
+        padding: 5px 0;
+      }
+
+      /* Grid Makanan Mobile: Proporsi Kartu Sempurna */
+      .food-item-img {
+        height: 115px !important;
+      }
+      .food-item-title {
+        font-size: 12.5px !important;
+        min-height: 32px;
+      }
+      .food-card-cal {
+        font-size: 12.5px !important;
+        margin-bottom: 4px !important;
+      }
+      .macro-clean-grid {
+        padding: 4px 1px !important;
+        margin-bottom: 8px !important;
+      }
+      .m-clean-lbl {
+        font-size: 9.5px !important;
+        letter-spacing: -0.3px;
+      }
+      .m-clean-val {
+        font-size: 11.5px !important;
+      }
+      .m-clean-val span {
+        font-size: 9px !important;
+      }
+      .catalog-pagination-wrap {
+        flex-direction: column;
+        align-items: center !important;
+        text-align: center;
+        gap: 8px;
+      }
+
+      /* Baris Sesi Makan (Riwayat & Dashboard): Tata Letak Bertingkat yang Lapang */
+      .session-item-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        padding: 11px 12px !important;
+      }
+      .session-item-row > div:first-child {
+        width: 100% !important;
+      }
+      .session-item-row > div:last-child {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-top: 8px !important;
+        border-top: 1px dashed #EAECE6 !important;
+      }
+
+      /* Sesi Makan Riwayat Mobile */
+      .history-session-card {
+        padding: 11px 12px !important;
+      }
+      .session-food-chip {
+        padding: 2.5px 7px !important;
+        font-size: 11.5px !important;
+      }
+      .session-macro-pills {
+        gap: 6px !important;
+      }
+      .session-macro-tag {
+        font-size: 11px !important;
+      }
+
+      /* Modal Responsif untuk Layar Sentuh */
+      .modal-dialog {
+        margin: 0.5rem auto !important;
+        max-width: 95vw !important;
+      }
+      #modalDetail .position-relative {
+        height: 165px !important;
+      }
+      #modalDetail .p-4 {
+        padding: 16px !important;
+      }
+      #picker-list {
+        max-height: 320px !important;
+      }
+    }
+
+    /* --- Smartphone Layar Ramping / Resolusi Kecil (<= 480px) --- */
+    @media (max-width: 480px) {
+      .app-navbar-wrapper {
+        padding: 0 4px;
+        top: 4px;
+      }
+      .app-navbar-pill {
+        padding: 6px 8px;
+        border-radius: 16px;
+      }
+      .brand-title {
+        font-size: 1.15rem;
+      }
+      .nav-tab-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        justify-content: center;
+        padding: 5px 5px;
+        font-size: 11.5px;
+        gap: 2px;
+        white-space: nowrap;
+      }
+      .nav-user-pill {
+        padding: 3px 6px 3px 4px;
+        gap: 5px;
+      }
+      .nav-user-pill #top-user-name {
+        max-width: 60px !important;
+        font-size: 11px !important;
+      }
+      .nav-user-pill #top-user-target {
+        font-size: 9.5px !important;
+      }
+      .btn-nav-logout {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+      }
+      .btn-nav-ghost {
+        padding: 4px 8px;
+        font-size: 11.5px;
+      }
+      .btn-nav-cta {
+        padding: 4px 10px;
+        font-size: 11.5px;
+      }
+      .hero-search-box {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        border-radius: 9999px !important;
+        padding: 4px 5px 4px 12px !important;
+        gap: 6px !important;
+      }
+      .hero-search-box input {
+        text-align: left !important;
+        font-size: 12px !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+      }
+      .hero-search-box .btn-hero-search {
+        width: auto !important;
+        text-align: center !important;
+        padding: 6px 12px !important;
+        font-size: 11.5px !important;
+        border-radius: 9999px !important;
+        white-space: nowrap !important;
+      }
+      .food-item-img {
+        height: 98px !important;
+      }
+      .m-clean-lbl {
+        font-size: 8.5px !important;
+      }
+      .m-clean-val {
+        font-size: 10.5px !important;
+      }
+      .picker-food-item {
+        padding: 8px !important;
+        gap: 8px !important;
+      }
+      .picker-food-item img {
+        width: 38px !important;
+        height: 38px !important;
+      }
+      .picker-food-item .btn {
+        padding: 3px 8px !important;
+        font-size: 11px !important;
+      }
+      /* Sesi Makan Dashboard: Ringkas Label Ikon & Tombol Aksi Kapsul Kompak */
+      #dash-meals-list .session-item-row {
+        padding: 8px 10px !important;
+      }
+      .btn-trash-circle, .btn-edit-circle {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+      }
+      .btn-trash-circle i, .btn-edit-circle i {
+        font-size: 13px !important;
+      }
+      .session-actions-group {
+        gap: 5px;
+      }
+    }
+
+    /* --- Smartphone Ultra-Kompak (<= 360px, misal iPhone SE 1, Galaxy Fold Cover, Galaxy A01) --- */
+    @media (max-width: 360px) {
+      .history-session-card {
+        padding: 9px 10px !important;
+      }
+      .session-food-chip {
+        padding: 2px 6px !important;
+        font-size: 10.5px !important;
+      }
+      .session-macro-pills {
+        gap: 4px !important;
+      }
+      .session-macro-tag {
+        font-size: 10px !important;
+      }
+      .btn-trash-circle, .btn-edit-circle {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+      }
+      .btn-trash-circle i, .btn-edit-circle i {
+        font-size: 12px !important;
+      }
+      .session-actions-group {
+        gap: 4px;
+      }
+      .nav-center-tabs {
+        justify-content: flex-start !important;
+        padding: 2px;
+      }
+      .nav-tab-btn {
+        padding: 4px 6px;
+        font-size: 11px;
+      }
+      .hero-search-box {
+        padding: 3px 4px 3px 10px !important;
+        gap: 4px !important;
+      }
+      .hero-search-box input {
+        font-size: 11px !important;
+      }
+      .hero-search-box .btn-hero-search {
+        padding: 5px 10px !important;
+        font-size: 10.5px !important;
+      }
+      .hero-headline {
+        font-size: 1.35rem !important;
+      }
+      .hero-plate-img {
+        max-width: 180px !important;
+      }
+      .food-item-img {
+        height: 88px !important;
+      }
+      .food-item-title {
+        font-size: 11.5px !important;
+      }
+      .m-clean-lbl {
+        font-size: 8px !important;
+      }
+    }

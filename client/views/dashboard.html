@@ -1,0 +1,117 @@
+<!-- ==================== HALAMAN 2: RINGKASAN GIZI HARIAN (DASHBOARD) ==================== -->
+<section id="page-dashboard" class="page-section d-none">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h4 fw-bold mb-0">Ringkasan Hari Ini</h1>
+      <p class="text-secondary small mb-0" id="dash-date-text">-</p>
+    </div>
+    <button type="button" class="btn btn-olive btn-sm d-none" id="btn-dash-catat-top" onclick="switchPage('catat')">
+      <i class="bi bi-plus-lg me-1"></i> Catat Makanan
+    </button>
+  </div>
+
+  <!-- Kartu Indikator Kalori & Target Harian -->
+  <div class="row g-2 g-md-3 mb-3">
+    <div class="col-md-7">
+      <div class="app-card p-3 p-md-4 h-100 d-flex flex-column justify-content-between">
+        <div>
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="text-secondary small">Konsumsi kalori hari ini</span>
+            <span class="badge text-bg-light border" id="dash-target-pill">Target: 0 kkal</span>
+          </div>
+          <div class="d-flex align-items-baseline gap-2 mb-2">
+            <span class="fs-2 fw-bold text-dark" id="dash-consumed-num">0</span>
+            <span class="text-secondary small">/ <span id="dash-target-max">0</span> kkal</span>
+            <span class="ms-auto text-secondary small" id="dash-remaining-num">Sisa 0 kkal</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="progress mb-2" style="height: 7px; background: #EAECE6; border-radius: 99px;">
+            <div class="progress-bar" id="dash-progress-bar" style="width: 0%; background: var(--olive); border-radius: 99px;"></div>
+          </div>
+          <div class="d-flex justify-content-between text-secondary" style="font-size: 11px;">
+            <span id="dash-progress-pct" class="fw-semibold text-dark">0% tercapai</span>
+            <span>Berdasarkan profil & aktivitas</span>
+          </div>
+
+          <!-- Pembagian 4 Sesi Makan (Format macro-clean-grid persis Home & Makanan) -->
+          <div class="macro-clean-grid mt-3 mb-0">
+            <div class="macro-clean-col">
+              <span class="m-clean-lbl"><i class="bi bi-sun me-1"></i>Sarapan</span>
+              <span class="m-clean-val"><strong id="dash-meal-sarapan-cal">0</strong> <small class="text-muted">kkal</small></span>
+            </div>
+            <div class="macro-clean-divider"></div>
+            <div class="macro-clean-col">
+              <span class="m-clean-lbl"><i class="bi bi-brightness-high me-1"></i>Siang</span>
+              <span class="m-clean-val"><strong id="dash-meal-siang-cal">0</strong> <small class="text-muted">kkal</small></span>
+            </div>
+            <div class="macro-clean-divider"></div>
+            <div class="macro-clean-col">
+              <span class="m-clean-lbl"><i class="bi bi-moon-stars me-1"></i>Malam</span>
+              <span class="m-clean-val"><strong id="dash-meal-malam-cal">0</strong> <small class="text-muted">kkal</small></span>
+            </div>
+            <div class="macro-clean-divider"></div>
+            <div class="macro-clean-col">
+              <span class="m-clean-lbl"><i class="bi bi-cup-hot me-1"></i>Camilan</span>
+              <span class="m-clean-val"><strong id="dash-meal-camilan-cal">0</strong> <small class="text-muted">kkal</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rincian Progres Nutrisi Makro (Protein, Karbohidrat, Lemak) -->
+    <div class="col-md-5">
+      <div class="app-card p-3 p-md-4 h-100 d-flex flex-column justify-content-between">
+        <div class="small fw-semibold text-secondary mb-2">Kandungan Gizi Hari Ini</div>
+        <div class="d-flex flex-column gap-2">
+          <div class="py-1 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="small text-secondary">Protein</span>
+              <span class="small"><strong id="dash-prot">0</strong>g / <span class="text-secondary" id="dash-prot-target">0g</span></span>
+            </div>
+            <div class="progress" style="height: 5px; background: #EAECE6; border-radius: 99px;">
+              <div class="progress-bar" id="dash-prot-bar" style="width: 0%; background: var(--olive); border-radius: 99px;"></div>
+            </div>
+          </div>
+
+          <div class="py-1 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="small text-secondary">Karbohidrat</span>
+              <span class="small"><strong id="dash-carb">0</strong>g / <span class="text-secondary" id="dash-carb-target">0g</span></span>
+            </div>
+            <div class="progress" style="height: 5px; background: #EAECE6; border-radius: 99px;">
+              <div class="progress-bar" id="dash-carb-bar" style="width: 0%; background: #E7A93B; border-radius: 99px;"></div>
+            </div>
+          </div>
+
+          <div class="py-1">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="small text-secondary">Lemak</span>
+              <span class="small"><strong id="dash-fat">0</strong>g / <span class="text-secondary" id="dash-fat-target">0g</span></span>
+            </div>
+            <div class="progress" style="height: 5px; background: #EAECE6; border-radius: 99px;">
+              <div class="progress-bar" id="dash-fat-bar" style="width: 0%; background: var(--danger); border-radius: 99px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="text-secondary pt-2 border-top d-flex justify-content-between" style="font-size: 11px;">
+          <span>BMR (Energi Basal):</span>
+          <strong><span id="dash-bmr-text">-</span> kkal</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daftar Sesi Makan Hari Ini -->
+  <div class="app-card p-3 p-md-4 mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h6 fw-bold mb-0 text-dark">Catatan Makan Hari Ini</h2>
+      <span class="badge text-bg-light border px-2.5 py-1 text-secondary" style="font-size: 11.5px; border-radius: 9999px;" id="dash-meal-count">0 Sesi</span>
+    </div>
+    <div id="dash-meals-list">
+      <!-- Kontainer daftar sesi makan dirender dinamis -->
+    </div>
+  </div>
+</section>

@@ -1,0 +1,276 @@
+<!-- ==================== MODAL AUTENTIKASI GESER (Referensi Pinterest) ==================== -->
+<div class="modal fade" id="modalAuth" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-auth">
+    <div class="modal-content border-0 bg-transparent shadow-none">
+      
+      <div class="auth-slider-container" id="auth-slider-container">
+        <!-- Tombol Silang Penutup Modal -->
+        <button type="button" class="auth-close-btn" data-bs-dismiss="modal" aria-label="Tutup" title="Tutup">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <!-- 1. PANEL FORMULIR MASUK AKUN (SIGN IN) -->
+        <div class="auth-form-container auth-sign-in">
+          <form id="form-auth-login" onsubmit="submitLogin(event)">
+            <div class="auth-form-header">
+              <h2 class="auth-title">Masuk Akun</h2>
+              <p class="auth-subtitle">Kelola dan pantau porsi makanmu setiap hari.</p>
+            </div>
+
+            <div id="login-error-msg" class="alert alert-danger py-1 small d-none w-100"></div>
+
+            <div class="mb-3 w-100 text-start">
+              <label class="form-label" for="login-user">Username</label>
+              <input type="text" class="form-control" id="login-user" required autocomplete="username" placeholder="Masukkan username">
+            </div>
+
+            <div class="mb-3 w-100 text-start">
+              <label class="form-label" for="login-pass">Password</label>
+              <input type="password" class="form-control" id="login-pass" required autocomplete="current-password" placeholder="Masukkan password">
+            </div>
+
+            <button type="submit" class="btn btn-olive w-100 py-2 mt-2" id="btn-submit-login">
+              Masuk ke Akun
+            </button>
+
+            <div class="text-center mt-3 small text-secondary d-md-none">
+              Belum punya akun? <a href="#" class="text-decoration-none fw-semibold" onclick="toggleAuthMode('register'); return false;" style="color: var(--olive);">Daftar di sini</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- 2. PANEL FORMULIR DAFTAR AKUN BARU (SIGN UP) -->
+        <div class="auth-form-container auth-sign-up">
+          <form id="form-auth-register" onsubmit="submitRegister(event)">
+            <div class="auth-form-header">
+              <h2 class="auth-title">Daftar Akun Baru</h2>
+              <p class="auth-subtitle">Hitung BMR & target kalori harianmu secara akurat.</p>
+            </div>
+
+            <div id="reg-error-msg" class="alert alert-danger py-1 small d-none w-100"></div>
+
+            <div class="row g-2 mb-2 w-100 text-start">
+              <div class="col-6">
+                <label class="form-label" for="reg-username">Username</label>
+                <input type="text" class="form-control form-control-sm" id="reg-username" required placeholder="budi12">
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="reg-email">Email</label>
+                <input type="email" class="form-control form-control-sm" id="reg-email" required placeholder="budi@mail.com">
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2 w-100 text-start">
+              <div class="col-6">
+                <label class="form-label" for="reg-pass">Password (Min. 8)</label>
+                <input type="password" class="form-control form-control-sm" id="reg-pass" required minlength="8" placeholder="••••••••">
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="reg-nama">Nama Lengkap</label>
+                <input type="text" class="form-control form-control-sm" id="reg-nama" required placeholder="Budi Santoso">
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2 w-100 text-start">
+              <div class="col-6">
+                <label class="form-label" for="reg-gender">Jenis Kelamin</label>
+                <select class="form-select form-select-sm" id="reg-gender" required>
+                  <option value="L">Laki-laki (L)</option>
+                  <option value="P">Perempuan (P)</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="reg-usia">Usia (Tahun)</label>
+                <input type="number" class="form-control form-control-sm" id="reg-usia" required min="10" max="120" value="25">
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2 w-100 text-start">
+              <div class="col-6">
+                <label class="form-label" for="reg-bb">Berat Badan (kg)</label>
+                <input type="number" step="0.1" class="form-control form-control-sm" id="reg-bb" required min="20" value="65">
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="reg-tb">Tinggi Badan (cm)</label>
+                <input type="number" step="0.1" class="form-control form-control-sm" id="reg-tb" required min="50" value="170">
+              </div>
+            </div>
+
+            <div class="mb-3 w-100 text-start">
+              <label class="form-label" for="reg-akt">Aktivitas Fisik</label>
+              <select class="form-select form-select-sm" id="reg-akt" required>
+                <option value="sedentary">Sedentary (Jarang olahraga / kerja duduk)</option>
+                <option value="ringan" selected>Ringan (Olahraga 1-3 hari/minggu)</option>
+                <option value="sedang">Sedang (Olahraga 3-5 hari/minggu)</option>
+                <option value="berat">Berat (Olahraga 6-7 hari/minggu)</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-olive w-100 py-2 mt-1" id="btn-submit-reg">
+              Daftar & Hitung Target
+            </button>
+
+            <div class="text-center mt-3 small text-secondary d-md-none">
+              Sudah punya akun? <a href="#" class="text-decoration-none fw-semibold" onclick="toggleAuthMode('login'); return false;" style="color: var(--olive);">Masuk di sini</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- 3. PANEL HAMPARAN GESER HIJAU (SLIDING TOGGLE OVERLAY) -->
+        <div class="auth-toggle-container">
+          <div class="auth-toggle">
+            <!-- Panel Sisi Kiri: Muncul saat pengguna berada pada form pendaftaran -->
+            <div class="auth-toggle-panel auth-toggle-left">
+              <div class="auth-brand-light">porsi<span class="brand-dot-light">.</span></div>
+              <h3 class="fw-bold mt-3 mb-2 text-white">Sudah Punya Akun?</h3>
+              <p class="small text-white-50 mb-3" style="max-width: 270px; line-height: 1.5;">
+                Masuk dengan akunmu untuk melanjutkan pencatatan porsi dan pantauan gizi harian.
+              </p>
+              <button type="button" class="auth-toggle-btn" id="auth-to-login" onclick="toggleAuthMode('login')">
+                Masuk ke Akun
+              </button>
+            </div>
+
+            <!-- Panel Sisi Kanan: Muncul saat pengguna berada pada form login -->
+            <div class="auth-toggle-panel auth-toggle-right">
+              <div class="auth-brand-light">porsi<span class="brand-dot-light">.</span></div>
+              <h3 class="fw-bold mt-3 mb-2 text-white">Halo, Sahabat Sehat!</h3>
+              <p class="small text-white-50 mb-3" style="max-width: 270px; line-height: 1.5;">
+                Belum punya akun? Daftarkan data tubuhmu dan dapatkan target kalori harian otomatis.
+              </p>
+              <button type="button" class="auth-toggle-btn" id="auth-to-register" onclick="toggleAuthMode('register')">
+                Daftar Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL PEMILIH MAKANAN (FOOD PICKER) ==================== -->
+<div class="modal fade" id="modalPicker" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 620px;">
+    <div class="modal-content app-card border-0 shadow">
+      <div class="modal-header border-bottom py-2 px-3">
+        <h2 class="modal-title h6 mb-0 fw-bold">Pilih Makanan</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body p-3">
+        <div class="position-relative mb-2">
+          <input type="text" class="form-control form-control-sm ps-4" id="picker-input" placeholder="Cari nama makanan..." oninput="searchPicker(this.value)">
+          <i class="bi bi-search position-absolute text-secondary" style="left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px;"></i>
+        </div>
+        <div class="list-group list-group-flush border rounded" id="picker-list" style="max-height: 400px; overflow-y: auto;">
+          <!-- Daftar makanan pemilih dirender dinamis -->
+        </div>
+      </div>
+      <div class="modal-footer border-top py-2 px-3 d-flex justify-content-between align-items-center">
+        <small class="text-secondary" style="font-size: 11.5px;" id="picker-count-badge">Memuat makanan...</small>
+        <button type="button" class="btn btn-subtle btn-sm" data-bs-dismiss="modal">Selesai</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL DETAIL INFORMASI MAKANAN (MODERN & LUAS) ==================== -->
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 520px;">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden; background: #FFFFFF;">
+      <!-- Banner Hero Gambar Makanan dengan Tombol Tutup & Badge Melayang -->
+      <div class="position-relative" style="height: 220px; background-color: #F4F6F0;">
+        <img id="detail-img" src="" alt="Makanan" class="w-100 h-100" style="object-fit: cover;" onerror="this.onerror=null; this.src=FOOD_IMG_FALLBACK;">
+        <!-- Gradien Overlay Lembut di Sisi Bawah Gambar -->
+        <div class="position-absolute bottom-0 start-0 end-0" style="height: 70px; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);"></div>
+        
+        <!-- Tombol Tutup Melayang di Pojok Kanan Atas -->
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-3 p-2 bg-white rounded-circle shadow-sm" data-bs-dismiss="modal" aria-label="Tutup" style="opacity: 0.95; z-index: 2;"></button>
+
+        <!-- Label Kategori Melayang di Pojok Kiri Bawah -->
+        <div class="position-absolute bottom-0 start-0 m-3 d-flex align-items-center gap-2" style="z-index: 2;">
+          <span class="badge bg-dark bg-opacity-75 text-white px-2 py-1 fw-normal" style="font-size: 11px; border-radius: 8px;">Per 100 gram</span>
+        </div>
+
+        <!-- Badge Kalori Utama Melayang di Pojok Kanan Bawah -->
+        <div class="position-absolute bottom-0 end-0 m-3 bg-white text-dark shadow px-3 py-1.5 rounded-pill d-flex align-items-center gap-1.5" style="z-index: 2;">
+          <span class="fw-bold fs-6 text-dark" id="detail-cal" style="margin-right: 5px;">-</span>
+          <span class="text-secondary small">kkal</span>
+        </div>
+      </div>
+
+      <!-- Badan Konten Modal Detail Makanan -->
+      <div class="p-4">
+        <!-- Judul Makanan & Deskripsi Singkat -->
+        <div class="mb-3">
+          <h3 class="h5 fw-bold text-dark mb-1" id="detail-name">-</h3>
+          <p class="text-secondary small mb-0">Informasi nilai gizi per 100 gram makanan berdasarkan standar komposisi pangan.</p>
+        </div>
+
+        <!-- Bilah Rasio Kandungan Gizi (Protein, Karbohidrat, Lemak) -->
+        <div class="rounded mb-3 border" style="background: #FAFAFA; padding: 12px 14px;">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-secondary fw-medium" style="font-size: 11.5px;">Komposisi Zat Gizi</span>
+            <span class="text-dark fw-semibold" style="font-size: 11px;" id="detail-macro-pct-text">Protein • Karbohidrat • Lemak</span>
+          </div>
+          <div class="progress" style="height: 7px; background: #EAECE6; border-radius: 99px; overflow: hidden;">
+            <div class="progress-bar" id="detail-bar-prot" style="width: 33%; background: var(--olive);" title="Protein"></div>
+            <div class="progress-bar" id="detail-bar-carb" style="width: 34%; background: #E7A93B;" title="Karbohidrat"></div>
+            <div class="progress-bar" id="detail-bar-fat" style="width: 33%; background: var(--danger);" title="Lemak"></div>
+          </div>
+        </div>
+
+        <!-- 3 Kotak Kartu Rincian Zat Gizi -->
+        <div class="row g-2 mb-3">
+          <div class="col-4">
+            <div class="rounded border text-center h-100" style="background: #FFFFFF; padding: 12px 6px;">
+              <div class="d-flex align-items-center justify-content-center gap-1 text-secondary mb-1" style="font-size: 11px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--olive); display: inline-block;"></span>
+                <span>Protein</span>
+              </div>
+              <div class="fw-bold text-dark fs-5"><span id="detail-prot">-</span> <small class="text-secondary fw-normal fs-7">g</small></div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="rounded border text-center h-100" style="background: #FFFFFF; padding: 12px 6px;">
+              <div class="d-flex align-items-center justify-content-center gap-1 text-secondary mb-1" style="font-size: 11px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #E7A93B; display: inline-block;"></span>
+                <span>Karbohidrat</span>
+              </div>
+              <div class="fw-bold text-dark fs-5"><span id="detail-carb">-</span> <small class="text-secondary fw-normal fs-7">g</small></div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="rounded border text-center h-100" style="background: #FFFFFF; padding: 12px 6px;">
+              <div class="d-flex align-items-center justify-content-center gap-1 text-secondary mb-1" style="font-size: 11px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
+                <span>Lemak</span>
+              </div>
+              <div class="fw-bold text-dark fs-5"><span id="detail-fat">-</span> <small class="text-secondary fw-normal fs-7">g</small></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Aksi Bawah Modal -->
+        <div class="d-flex gap-2 pt-2 border-top">
+          <button type="button" class="btn btn-subtle px-4 py-2" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-olive flex-fill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" id="btn-detail-add">
+            <i class="bi bi-plus-circle"></i> Tambah ke Piring
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifikasi Toast Mengambang -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+  <div id="simpleToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastContent">Pesan</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button>
+    </div>
+  </div>
+</div>
