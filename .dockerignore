@@ -1,7 +1,6 @@
 .git
 .github
 *.exe
-backend/backend.exe
-backend/bin
+bin/
 .env
 .env.local
