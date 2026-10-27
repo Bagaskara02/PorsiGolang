@@ -1050,15 +1050,20 @@
     .history-session-card {
       background: #FFFFFF;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px 15px;
+      border-radius: 14px;
+      padding: 15px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
       transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+    }
+    .history-session-card:last-child {
+      margin-bottom: 0;
     }
     .history-session-card:hover {
       border-color: #CBD5C4;
       background: #FCFDFB;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
     }
 
     .session-type-pill {
@@ -1901,57 +1906,7 @@
     }
 
     /* ==========================================================================
-       5. PANDUAN INTERAKTIF TAKARAN PORSI TANGAN
-       ========================================================================== */
-    .hand-portion-guide-card {
-      background: #FAFCF9;
-      border: 1px dashed rgba(85, 115, 75, 0.3) !important;
-      border-radius: 16px;
-    }
-    .hand-pill-btn {
-      background: #FFFFFF;
-      border: 1px solid #E2E7DE;
-      color: #374151;
-      padding: 6px 12px;
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .hand-pill-btn:hover {
-      background: #F3F7F0;
-      border-color: var(--olive);
-      color: var(--olive);
-    }
-    .hand-pill-btn.active {
-      background: #EAF1E7;
-      border-color: var(--olive);
-      color: #385130;
-      font-weight: 700;
-      box-shadow: 0 1px 4px rgba(85, 115, 75, 0.15);
-    }
-    .portion-slider {
-      accent-color: var(--olive);
-      height: 6px;
-      border-radius: 99px;
-      cursor: pointer;
-    }
-    .portion-slider::-webkit-slider-thumb {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--olive);
-      box-shadow: 0 2px 6px rgba(85, 115, 75, 0.4);
-      cursor: pointer;
-    }
-
-    /* ==========================================================================
-       6. ONBOARDING BANNER CARD PENGGUNA BARU
+       5. ONBOARDING BANNER CARD PENGGUNA BARU
        ========================================================================== */
     .onboarding-banner-card {
       background: linear-gradient(135deg, #F6F9F4 0%, #EEF4EB 100%);

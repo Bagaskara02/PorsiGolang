@@ -924,7 +924,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         dashTopBtn.style.display = 'inline-block';
       }
 
-      let html = '<div class="d-flex flex-column gap-2.5">';
+      let html = '<div class="d-flex flex-column gap-3">';
       meals.forEach(m => {
         let sCal = 0, sP = 0, sC = 0, sF = 0;
         let foodChipsHtml = '';
@@ -1571,7 +1571,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
           return;
         }
 
-        let html = '<div class="d-flex flex-column gap-2.5">';
+        let html = '<div class="d-flex flex-column gap-3">';
         meals.forEach(m => {
           let sCal = 0, sP = 0, sC = 0, sF = 0;
           let foodChipsHtml = '';
@@ -1788,67 +1788,4 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       localStorage.setItem('porsi_onboarding_dismissed', 'true');
       const onboardingCard = document.getElementById('dash-onboarding-card');
       if (onboardingCard) onboardingCard.classList.add('d-none');
-    }
-
-    // 3. Panduan Takaran Porsi Tangan Interaktif
-    function handleHandSliderInput(val) {
-      const gram = Number(val) || 100;
-      const valBadge = document.getElementById('hand-slider-val') || document.getElementById('hand-portion-val');
-      if (valBadge) valBadge.textContent = gram;
-
-      const badgeTop = document.getElementById('hand-estimate-badge');
-      const estText = document.getElementById('hand-slider-desc') || document.getElementById('hand-portion-estimation');
-
-      if (estText) {
-        if (gram <= 20) {
-          estText.innerHTML = `Setara sekitar <strong>1 ruas jempol</strong> (misal: mentega, minyak zaitun, selai).`;
-          if (badgeTop) badgeTop.textContent = `1 Jempol ≈ ${gram}g Lemak`;
-        } else if (gram <= 50) {
-          estText.innerHTML = `Setara sekitar <strong>2 jempol</strong> (misal: dressing salad, selai kacang, keju).`;
-          if (badgeTop) badgeTop.textContent = `2 Jempol ≈ ${gram}g Lemak/Saus`;
-        } else if (gram <= 85) {
-          estText.innerHTML = `Setara sekitar <strong>1 genggam tangan</strong> sayur atau buah potong (~80g).`;
-          if (badgeTop) badgeTop.textContent = `1 Genggam ≈ ${gram}g Sayuran`;
-        } else if (gram <= 110) {
-          estText.innerHTML = `Setara sekitar <strong>1 kepalan tangan</strong> nasi putih, kentang, atau pasta (~100g).`;
-          if (badgeTop) badgeTop.textContent = `1 Kepalan ≈ ${gram}g Karbohidrat`;
-        } else if (gram <= 150) {
-          estText.innerHTML = `Setara sekitar <strong>1 telapak tangan tebal</strong> daging, ayam, atau ikan (~100-120g).`;
-          if (badgeTop) badgeTop.textContent = `1 Telapak ≈ ${gram}g Protein`;
-        } else {
-          estText.innerHTML = `Setara porsi ekstra besar / <strong>2 kepalan tangan</strong> (~${gram}g).`;
-          if (badgeTop) badgeTop.textContent = `Porsi Besar ≈ ${gram}g`;
-        }
-      }
-
-      // Tandai tombol pill cepat yang sesuai
-      document.querySelectorAll('.hand-pill-btn').forEach(btn => {
-        const btnGram = Number(btn.getAttribute('data-gram') || (btn.onclick ? btn.getAttribute('onclick').match(/\d+/)?.[0] : 0));
-        if (Math.abs(btnGram - gram) <= 12) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-    }
-
-    function selectHandPreset(gram, label) {
-      const slider = document.getElementById('hand-portion-range');
-      if (slider) slider.value = gram;
-      handleHandSliderInput(gram);
-    }
-
-    function applyHandPortionToSelected() {
-      const slider = document.getElementById('hand-portion-range');
-      const gram = slider ? Number(slider.value) || 100 : 100;
-
-      // Cari input gramasi aktif di piring draf jika ada
-      const activeGramInput = document.querySelector('.draft-gram-input:focus') || document.querySelector('.draft-gram-input');
-      if (activeGramInput) {
-        activeGramInput.value = gram;
-        activeGramInput.dispatchEvent(new Event('input'));
-        toast(`Porsi tangan (${gram}g) berhasil diterapkan ke makanan.`);
-      } else {
-        toast(`Porsi tangan: ${gram}g. Tambahkan makanan ke piring untuk menerapkan.`);
-      }
     }
