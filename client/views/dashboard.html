@@ -10,6 +10,29 @@
     </button>
   </div>
 
+  <!-- Kartu Onboarding / Panduan Pengguna Baru (Empty State Flow) -->
+  <div class="app-card p-3 p-md-4 mb-3 border-start border-4 border-olive d-none" id="dash-onboarding-card" style="background: linear-gradient(135deg, #FAFBF8 0%, #F4F7F0 100%);">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div style="max-width: 580px;">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge text-bg-success px-2 py-0.5" style="font-size: 10.5px; background-color: var(--olive) !important;">Panduan Awal</span>
+          <h2 class="h6 fw-bold mb-0 text-dark">Selamat Datang di Porsi! Mulai Flow Sehatmu</h2>
+        </div>
+        <p class="text-secondary small mb-0" style="font-size: 12.5px; line-height: 1.5;">
+          Agar target harianmu akurat, lengkapi profil tubuh untuk hitung BMR & kebutuhan kalori harianmu, lalu catat makanan pertamamu hari ini.
+        </p>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="button" class="btn btn-olive btn-sm px-3" onclick="switchPage('profil')">
+          <i class="bi bi-calculator me-1"></i> Hitung Target Kalori
+        </button>
+        <button type="button" class="btn btn-subtle btn-sm text-secondary px-2.5" onclick="dismissOnboarding()">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Kartu Indikator Kalori & Target Harian -->
   <div class="row g-2 g-md-3 mb-3">
     <div class="col-md-7">

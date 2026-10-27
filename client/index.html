@@ -15,7 +15,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <!-- Lembar Gaya Kustom Terstruktur -->
-  <link rel="stylesheet" href="css/style.css?v=24">
+  <link rel="stylesheet" href="css/style.css?v=25">
   <link rel="stylesheet" href="css/auth.css?v=18">
 </head>
 <body>
@@ -60,13 +60,20 @@
 
         <!-- Aksi Pengguna (Sudah Terautentikasi / Login) -->
         <div id="user-actions" class="d-none align-items-center gap-2">
-          <div class="nav-user-pill" onclick="requireAuthOrGo('profil')" title="Lihat Profil">
-            <div class="nav-user-avatar">
-              <i class="bi bi-person-fill"></i>
+          <div class="nav-user-pill" onclick="requireAuthOrGo('profil')" title="Lihat Profil & Kebutuhan Kalori">
+            <!-- Mini Progress Ring Melingkar di Avatar Pengguna -->
+            <div class="nav-user-avatar-wrap position-relative">
+              <svg class="mini-progress-ring" width="34" height="34" viewBox="0 0 34 34">
+                <circle class="ring-bg" cx="17" cy="17" r="14" fill="none" stroke="#EAECE6" stroke-width="2.6" />
+                <circle class="ring-progress" id="top-user-progress-ring" cx="17" cy="17" r="14" fill="none" stroke="var(--olive)" stroke-width="2.6" stroke-dasharray="87.96" stroke-dashoffset="87.96" stroke-linecap="round" transform="rotate(-90 17 17)" />
+              </svg>
+              <div class="nav-user-avatar">
+                <i class="bi bi-person-fill"></i>
+              </div>
             </div>
-            <div class="d-none d-sm-block text-start" style="line-height: 1.15;">
-              <div class="fw-semibold" style="font-size: 12px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="top-user-name">User</div>
-              <div class="text-secondary" style="font-size: 10.5px;" id="top-user-target">0 kkal</div>
+            <div class="d-block text-start user-text-block" style="line-height: 1.15;">
+              <div class="fw-semibold user-name-label" id="top-user-name">User</div>
+              <div class="text-secondary user-target-label" id="top-user-target">0 kkal</div>
             </div>
           </div>
           <button type="button" class="btn-nav-logout" onclick="logout()" title="Keluar">
@@ -79,6 +86,15 @@
 
   <!-- Kontainer Konten Utama Aplikasi (Dimuat per view dari folder views/) -->
   <main class="container-lg py-3 py-md-4" id="main-content">
+    <!-- Skeleton Fallback Placeholder (Mencegah Layar Blank Saat CSR Memuat Data Awal) -->
+    <div id="main-skeleton-loader" class="main-skeleton-loader">
+      <div class="skeleton-shimmer skeleton-hero mb-3"></div>
+      <div class="row g-3">
+        <div class="col-12 col-md-8"><div class="skeleton-shimmer skeleton-card-lg"></div></div>
+        <div class="col-12 col-md-4"><div class="skeleton-shimmer skeleton-card-sm"></div></div>
+      </div>
+    </div>
+
     <div id="view-home"></div>
     <div id="view-makanan"></div>
     <div id="view-dashboard"></div>
@@ -87,6 +103,34 @@
     <div id="view-profil"></div>
   </main>
 
+  <!-- Bilah Navigasi Bawah Khusus Smartphone (Mobile Bottom Navigation Bar) -->
+  <nav class="mobile-bottom-nav d-md-none" id="mobile-bottom-nav" aria-label="Navigasi Bawah Ponsel">
+    <div class="bottom-nav-inner">
+      <button type="button" class="bottom-nav-item active" id="mob-btn-home" onclick="switchPage('home')">
+        <i class="bi bi-house-door bottom-nav-icon"></i>
+        <span class="bottom-nav-label">Home</span>
+      </button>
+      <button type="button" class="bottom-nav-item" id="mob-btn-makanan" onclick="switchPage('makanan')">
+        <i class="bi bi-compass bottom-nav-icon"></i>
+        <span class="bottom-nav-label">Makanan</span>
+      </button>
+      <button type="button" class="bottom-nav-item bottom-nav-action-center" id="mob-btn-catat" onclick="requireAuthOrGo('catat')" aria-label="Catat Piring">
+        <div class="action-center-circle">
+          <i class="bi bi-plus-lg"></i>
+        </div>
+        <span class="bottom-nav-label">Catat</span>
+      </button>
+      <button type="button" class="bottom-nav-item" id="mob-btn-dashboard" onclick="requireAuthOrGo('dashboard')">
+        <i class="bi bi-pie-chart bottom-nav-icon"></i>
+        <span class="bottom-nav-label">Ringkasan</span>
+      </button>
+      <button type="button" class="bottom-nav-item" id="mob-btn-riwayat" onclick="requireAuthOrGo('riwayat')">
+        <i class="bi bi-calendar3 bottom-nav-icon"></i>
+        <span class="bottom-nav-label">Riwayat</span>
+      </button>
+    </div>
+  </nav>
+
   <!-- Kontainer Komponen Modal & Toast (Dimuat dari views/modals.html) -->
   <div id="views-modals"></div>
 
@@ -94,6 +138,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Berkas Logika Utama Aplikasi (JavaScript Terstruktur) -->
-  <script src="js/app.js?v=27"></script>
+  <script src="js/app.js?v=28"></script>
 </body>
 </html>

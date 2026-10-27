@@ -297,16 +297,34 @@
       background: #E9ECE3;
     }
 
+    .nav-user-avatar-wrap {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-user-avatar-wrap .mini-progress-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 34px;
+      height: 34px;
+      pointer-events: none;
+    }
     .nav-user-avatar {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: var(--olive);
       color: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 11.5px;
+      z-index: 1;
     }
 
     .btn-nav-logout {
@@ -1668,4 +1686,288 @@
       .m-clean-lbl {
         font-size: 8px !important;
       }
+    }
+
+    /* ==========================================================================
+       1. CSR SKELETON LOADER (Mencegah Blank Screen Saat Rendering Client)
+       ========================================================================== */
+    .main-skeleton-loader {
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .fade-out-skeleton {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .skeleton-box {
+      display: block;
+      background: linear-gradient(90deg, #F0F2EC 25%, #E4E8DF 50%, #F0F2EC 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite ease-in-out;
+      border-radius: 8px;
+    }
+    @keyframes skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ==========================================================================
+       2. MINI PROGRESS RING KALORI DI HEADER
+       ========================================================================== */
+    .mini-progress-ring-container {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .mini-progress-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 36px;
+      height: 36px;
+      transform: rotate(-90deg);
+      pointer-events: none;
+    }
+    .ring-bg {
+      stroke: #E8ECE4;
+      stroke-width: 2.4;
+    }
+    .ring-progress {
+      stroke: var(--olive);
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-dasharray: 87.96;
+      stroke-dashoffset: 87.96;
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
+    }
+
+    /* ==========================================================================
+       3. MOBILE BOTTOM NAVIGATION BAR (Viewport <= 768px)
+       ========================================================================== */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1045;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(85, 115, 75, 0.15);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+      height: calc(62px + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .bottom-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 62px;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 6px 12px;
+      border-radius: 12px;
+      color: #6B7280;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .bottom-nav-item i {
+      font-size: 19px;
+      line-height: 1;
+      margin-bottom: 3px;
+      transition: transform 0.2s ease;
+    }
+    .bottom-nav-item span {
+      font-size: 10.5px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.2px;
+    }
+    .bottom-nav-item:hover,
+    .bottom-nav-item.active {
+      color: var(--olive);
+    }
+    .bottom-nav-item.active i {
+      transform: scale(1.12);
+      font-weight: bold;
+    }
+    .bottom-nav-item.active span {
+      font-weight: 700;
+    }
+
+    /* Tombol Floating Plus Tambah Sesi di Tengah */
+    .bottom-nav-action-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      margin-top: -16px;
+      padding: 0 6px;
+      cursor: pointer;
+    }
+    .action-center-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #55734B 0%, #3F5736 100%);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(85, 115, 75, 0.45);
+      border: 3px solid #FFFFFF;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    }
+    .action-center-circle i {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .bottom-nav-action-center:active .action-center-circle {
+      transform: scale(0.92);
+      box-shadow: 0 2px 10px rgba(85, 115, 75, 0.3);
+    }
+    .bottom-nav-action-center span {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--olive);
+      margin-top: 2px;
+    }
+
+    /* ==========================================================================
+       4. NATIVE MOBILE BOTTOM SHEET (MODAL SLIDE-UP DRAWER)
+       ========================================================================== */
+    .bottom-sheet-drag-handle {
+      width: 42px;
+      height: 4px;
+      border-radius: 99px;
+      background-color: #D3D8CE;
+      margin: 10px auto 4px auto;
+    }
+
+    @media (max-width: 767.98px) {
+      /* Berikan ruang aman di bawah body agar konten tidak tertutup Bottom Bar */
+      body {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+      }
+
+      /* Sembunyikan navigasi tengah di header atas pada mobile (berpindah ke Bottom Nav) */
+      .desktop-nav.nav-center-tabs {
+        display: none !important;
+      }
+
+      /* Transformasikan modal picker & detail menjadi slide-up bottom sheet */
+      .modal-bottom-sheet-mobile {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .modal-bottom-sheet-mobile .modal-dialog {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 !important;
+        max-width: 100% !important;
+        transform: translateY(100%) !important;
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .modal-bottom-sheet-mobile.show .modal-dialog {
+        transform: translateY(0) !important;
+      }
+      .modal-bottom-sheet-mobile .modal-content {
+        border-radius: 24px 24px 0 0 !important;
+        border: none !important;
+        max-height: 86vh;
+        overflow-y: auto;
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18) !important;
+      }
+    }
+
+    /* ==========================================================================
+       5. PANDUAN INTERAKTIF TAKARAN PORSI TANGAN
+       ========================================================================== */
+    .hand-portion-guide-card {
+      background: #FAFCF9;
+      border: 1px dashed rgba(85, 115, 75, 0.3) !important;
+      border-radius: 16px;
+    }
+    .hand-pill-btn {
+      background: #FFFFFF;
+      border: 1px solid #E2E7DE;
+      color: #374151;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .hand-pill-btn:hover {
+      background: #F3F7F0;
+      border-color: var(--olive);
+      color: var(--olive);
+    }
+    .hand-pill-btn.active {
+      background: #EAF1E7;
+      border-color: var(--olive);
+      color: #385130;
+      font-weight: 700;
+      box-shadow: 0 1px 4px rgba(85, 115, 75, 0.15);
+    }
+    .portion-slider {
+      accent-color: var(--olive);
+      height: 6px;
+      border-radius: 99px;
+      cursor: pointer;
+    }
+    .portion-slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--olive);
+      box-shadow: 0 2px 6px rgba(85, 115, 75, 0.4);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       6. ONBOARDING BANNER CARD PENGGUNA BARU
+       ========================================================================== */
+    .onboarding-banner-card {
+      background: linear-gradient(135deg, #F6F9F4 0%, #EEF4EB 100%);
+      border: 1px solid rgba(85, 115, 75, 0.22);
+      border-radius: 16px;
+    }
+    .onboarding-step-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--olive);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }

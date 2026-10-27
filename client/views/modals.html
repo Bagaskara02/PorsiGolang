@@ -152,9 +152,10 @@
 </div>
 
 <!-- ==================== MODAL PEMILIH MAKANAN (FOOD PICKER) ==================== -->
-<div class="modal fade" id="modalPicker" tabindex="-1" aria-hidden="true">
+<div class="modal fade modal-bottom-sheet-mobile" id="modalPicker" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" style="max-width: 620px;">
     <div class="modal-content app-card border-0 shadow">
+      <div class="bottom-sheet-drag-handle d-md-none"></div>
       <div class="modal-header border-bottom py-2 px-3">
         <h2 class="modal-title h6 mb-0 fw-bold">Pilih Makanan</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
@@ -177,9 +178,10 @@
 </div>
 
 <!-- ==================== MODAL DETAIL INFORMASI MAKANAN (MODERN & LUAS) ==================== -->
-<div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+<div class="modal fade modal-bottom-sheet-mobile" id="modalDetail" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" style="max-width: 520px;">
     <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden; background: #FFFFFF;">
+      <div class="bottom-sheet-drag-handle d-md-none" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 5; background: rgba(255, 255, 255, 0.85); box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></div>
       <!-- Banner Hero Gambar Makanan dengan Tombol Tutup & Badge Melayang -->
       <div class="position-relative" style="height: 220px; background-color: #F4F6F0;">
         <img id="detail-img" src="" alt="Makanan" class="w-100 h-100" style="object-fit: cover;" onerror="this.onerror=null; this.src=FOOD_IMG_FALLBACK;">

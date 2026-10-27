@@ -111,8 +111,50 @@
       <div class="col-md-8">
         <div class="app-card p-3 p-md-4 h-100 d-flex flex-column justify-content-between">
           <div>
+            <!-- Panduan Visual Takaran Porsi Tangan (Interactive Hand Portion Guide & Slider) -->
+            <div class="hand-portion-guide-card p-3 mb-3 border rounded-3" style="background: #FAFBF8; border-color: #E6EAE0 !important;">
+              <div class="d-flex justify-content-between align-items-center mb-1.5">
+                <span class="small fw-semibold text-dark d-flex align-items-center gap-1.5" style="font-size: 12.5px;">
+                  <i class="bi bi-hand-index-thumb text-olive" style="font-size: 14px;"></i> Panduan Takaran Porsi Tangan
+                </span>
+                <span class="badge text-bg-light border text-secondary" style="font-size: 10px; border-radius: 99px;" id="hand-estimate-badge">1 Kepalan ≈ 100g</span>
+              </div>
+              <p class="text-secondary small mb-2" style="font-size: 11.5px; line-height: 1.4;">
+                Bingung menimbang gram makanan? Gunakan estimasi ukuran tangan praktis atau geser slider:
+              </p>
+              
+              <!-- Tombol Pill Estimasi Tangan Cepat -->
+              <div class="d-flex flex-wrap gap-1.5 mb-2.5">
+                <button type="button" class="btn btn-sm btn-subtle hand-pill-btn active" data-gram="100" onclick="selectHandPreset(100, '1 Kepalan Tangan ≈ 100g Karbohidrat (Nasi/Kentang)')">
+                  ✊ <strong>1 Kepalan</strong> (100g Karbo)
+                </button>
+                <button type="button" class="btn btn-sm btn-subtle hand-pill-btn" data-gram="90" onclick="selectHandPreset(90, '1 Telapak Tangan ≈ 90g Protein (Ayam/Daging/Ikan)')">
+                  ✋ <strong>1 Telapak</strong> (90g Protein)
+                </button>
+                <button type="button" class="btn btn-sm btn-subtle hand-pill-btn" data-gram="80" onclick="selectHandPreset(80, '1 Genggam Sayur ≈ 80g Sayuran/Salad')">
+                  🖐️ <strong>1 Genggam</strong> (80g Sayur)
+                </button>
+                <button type="button" class="btn btn-sm btn-subtle hand-pill-btn" data-gram="15" onclick="selectHandPreset(15, '1 Ujung Jempol ≈ 15g Lemak (Minyak/Margarin)')">
+                  👍 <strong>1 Jempol</strong> (15g Lemak)
+                </button>
+              </div>
+
+              <!-- Slider Interaktif Estimasi Gramatur -->
+              <div class="d-flex align-items-center gap-2 pt-1">
+                <span class="text-secondary small fw-medium" style="font-size: 11px;">10g</span>
+                <input type="range" class="form-range portion-slider flex-grow-1" id="hand-portion-range" min="10" max="400" step="5" value="100" oninput="handleHandSliderInput(this.value)">
+                <span class="text-secondary small fw-medium" style="font-size: 11px;">400g</span>
+                <div class="hand-slider-display bg-white border px-2 py-1 rounded text-center" style="min-width: 60px;">
+                  <strong class="text-dark" style="font-size: 13px;" id="hand-slider-val">100</strong> <small class="text-muted" style="font-size: 11px;">g</small>
+                </div>
+              </div>
+              <div class="small text-secondary mt-1.5 fst-italic" style="font-size: 11px;" id="hand-slider-desc">
+                ≈ 1 Kepalan tangan: setara 1 centong/porsi nasi sedang atau 1 kentang rebus sedang.
+              </div>
+            </div>
+
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <div class="fw-semibold ">Makanan di Piring</div>
+              <div class="fw-semibold">Makanan di Piring</div>
               <button type="button" class="btn btn-subtle btn-sm d-none" id="btn-plate-add-top" onclick="openPickerModal()">
                 <i class="bi bi-plus-lg me-1"></i> Tambah Makanan
               </button>

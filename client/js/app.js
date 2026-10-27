@@ -68,6 +68,13 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       // 1. Muat seluruh partial berkas HTML dari folder views/
       await loadAllViews();
 
+      // Sembunyikan CSR skeleton loader setelah seluruh modul tampilan terpasang
+      const mainSkeleton = document.getElementById('main-skeleton-loader');
+      if (mainSkeleton) {
+        mainSkeleton.classList.add('fade-out-skeleton');
+        setTimeout(() => mainSkeleton.remove(), 250);
+      }
+
       // 2. Inisialisasi Instance Modal Bootstrap & Toast Notifikasi
       const authEl = document.getElementById('modalAuth');
       if (authEl) {
@@ -207,6 +214,13 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         navBtn.classList.add('active');
       }
 
+      // Sinkronkan status aktif pada Bottom Navigation Bar mobile
+      document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+      const mobNavBtn = document.getElementById(`mob-btn-${pageId}`);
+      if (mobNavBtn) {
+        mobNavBtn.classList.add('active');
+      }
+
       currentPage = pageId;
       updateNavIndicator(pageId);
       requestAnimationFrame(() => updateNavIndicator(pageId));
@@ -306,6 +320,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
 
         document.getElementById('top-user-name').textContent = currentUser.nama_lengkap || currentUser.username;
         document.getElementById('top-user-target').textContent = `${fmt(currentUser.target_kalori_harian)} kkal`;
+        updateTopProgressRing(0, currentUser.target_kalori_harian);
       } else {
         guestActions.classList.remove('d-none');
         userActions.classList.add('d-none');
@@ -883,6 +898,10 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
 
       document.getElementById('dash-meal-count').textContent = `${meals.length} Sesi`;
 
+      // Perbarui Mini Progress Ring Kalori di Header & Status Onboarding Baru
+      updateTopProgressRing(cal, target);
+      checkOnboardingVisibility(meals.length);
+
       const dashTopBtn = document.getElementById('btn-dash-catat-top');
       const list = document.getElementById('dash-meals-list');
       if (meals.length === 0) {
@@ -932,21 +951,21 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         html += `
           <div class="history-session-card">
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <div class="d-flex align-items-center gap-2">
+              <div class="d-flex align-items-center gap-1.5 flex-wrap">
                 <span class="session-type-pill ${pillClass}">${m.name}</span>
-                <span class="session-time-pill"><i class="bi bi-clock me-1 text-muted" style="font-size: 11.5px;"></i>${m.meal_time}</span>
+                <span class="session-time-pill"><i class="bi bi-clock me-1 text-muted" style="font-size: 11px;"></i>${m.meal_time}</span>
               </div>
-              <div class="d-none d-md-flex align-items-center gap-3">
+              <div class="d-flex align-items-center gap-2">
                 <div class="text-end">
                   <strong class="text-dark fs-6">${fmt(sCal)}</strong>
                   <small class="text-secondary fw-normal ms-0.5" style="font-size: 11px;">kkal</small>
                 </div>
                 <div class="session-actions-group">
                   <button type="button" class="btn btn-sm btn-subtle btn-edit-circle" onclick="startEditMeal(${m.id})" title="Edit & tambah makanan di sesi ini">
-                    <i class="bi bi-pencil" style="font-size: 13.5px;"></i>
+                    <i class="bi bi-pencil" style="font-size: 13px;"></i>
                   </button>
                   <button type="button" class="btn btn-sm btn-subtle text-danger btn-trash-circle" onclick="deleteDashboardMeal(${m.id})" title="Hapus sesi ini">
-                    <i class="bi bi-trash3" style="font-size: 13.5px;"></i>
+                    <i class="bi bi-trash3" style="font-size: 13px;"></i>
                   </button>
                 </div>
               </div>
@@ -956,34 +975,19 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
               ${foodChipsHtml}
             </div>
 
-            <div class="d-flex align-items-center justify-content-between pt-2 border-top" style="border-color: #F0F2EC !important;">
-              <div class="session-macro-pills d-flex align-items-center gap-2.5">
+            <div class="d-flex align-items-center pt-2 border-top" style="border-color: #F0F2EC !important;">
+              <div class="session-macro-pills d-flex align-items-center flex-wrap gap-2 w-100">
                 <span class="session-macro-tag">
                   <span class="macro-dot macro-dot-prot me-1" style="background-color: #55734B !important;"></span>Protein: <strong class="text-dark">${fmtG(sP)}g</strong>
                 </span>
-                <span class="text-muted" style="font-size: 10px;">•</span>
+                <span class="text-muted d-none d-sm-inline" style="font-size: 10px;">•</span>
                 <span class="session-macro-tag">
                   <span class="macro-dot macro-dot-carb me-1" style="background-color: #E7A93B !important;"></span>Karbo: <strong class="text-dark">${fmtG(sC)}g</strong>
                 </span>
-                <span class="text-muted" style="font-size: 10px;">•</span>
+                <span class="text-muted d-none d-sm-inline" style="font-size: 10px;">•</span>
                 <span class="session-macro-tag">
                   <span class="macro-dot macro-dot-fat me-1" style="background-color: #A84135 !important;"></span>Lemak: <strong class="text-dark">${fmtG(sF)}g</strong>
                 </span>
-              </div>
-
-              <div class="d-flex d-md-none align-items-center gap-2">
-                <div class="text-end">
-                  <strong class="text-dark fs-6">${fmt(sCal)}</strong>
-                  <small class="text-secondary fw-normal ms-0.5" style="font-size: 11px;">kkal</small>
-                </div>
-                <div class="session-actions-group">
-                  <button type="button" class="btn btn-sm btn-subtle btn-edit-circle" onclick="startEditMeal(${m.id})" title="Edit & tambah makanan di sesi ini">
-                    <i class="bi bi-pencil" style="font-size: 13.5px;"></i>
-                  </button>
-                  <button type="button" class="btn btn-sm btn-subtle text-danger btn-trash-circle" onclick="deleteDashboardMeal(${m.id})" title="Hapus sesi ini">
-                    <i class="bi bi-trash3" style="font-size: 13.5px;"></i>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -1594,21 +1598,21 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
           html += `
             <div class="history-session-card">
               <div class="d-flex align-items-center justify-content-between mb-2">
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-1.5 flex-wrap">
                   <span class="session-type-pill ${pillClass}">${m.name}</span>
-                  <span class="session-time-pill"><i class="bi bi-clock me-1 text-muted" style="font-size: 11.5px;"></i>${m.meal_time}</span>
+                  <span class="session-time-pill"><i class="bi bi-clock me-1 text-muted" style="font-size: 11px;"></i>${m.meal_time}</span>
                 </div>
-                <div class="d-none d-md-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-2">
                   <div class="text-end">
                     <strong class="text-dark fs-6">${fmt(sCal)}</strong>
                     <small class="text-secondary fw-normal ms-0.5" style="font-size: 11px;">kkal</small>
                   </div>
                   <div class="session-actions-group">
                     <button type="button" class="btn btn-sm btn-subtle btn-edit-circle" onclick="startEditMeal(${m.id})" title="Edit & tambah makanan di sesi ini">
-                      <i class="bi bi-pencil" style="font-size: 13.5px;"></i>
+                      <i class="bi bi-pencil" style="font-size: 13px;"></i>
                     </button>
                     <button type="button" class="btn btn-sm btn-subtle text-danger btn-trash-circle" onclick="deleteHistoryMeal(${m.id})" title="Hapus sesi ini">
-                      <i class="bi bi-trash3" style="font-size: 13.5px;"></i>
+                      <i class="bi bi-trash3" style="font-size: 13px;"></i>
                     </button>
                   </div>
                 </div>
@@ -1618,34 +1622,19 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
                 ${foodChipsHtml}
               </div>
 
-              <div class="d-flex align-items-center justify-content-between pt-2 border-top" style="border-color: #F0F2EC !important;">
-                <div class="session-macro-pills d-flex align-items-center gap-2.5">
+              <div class="d-flex align-items-center pt-2 border-top" style="border-color: #F0F2EC !important;">
+                <div class="session-macro-pills d-flex align-items-center flex-wrap gap-2 w-100">
                   <span class="session-macro-tag">
                     <span class="macro-dot macro-dot-prot me-1" style="background-color: #55734B !important;"></span>Protein: <strong class="text-dark">${fmtG(sP)}g</strong>
                   </span>
-                  <span class="text-muted" style="font-size: 10px;">•</span>
+                  <span class="text-muted d-none d-sm-inline" style="font-size: 10px;">•</span>
                   <span class="session-macro-tag">
                     <span class="macro-dot macro-dot-carb me-1" style="background-color: #E7A93B !important;"></span>Karbo: <strong class="text-dark">${fmtG(sC)}g</strong>
                   </span>
-                  <span class="text-muted" style="font-size: 10px;">•</span>
+                  <span class="text-muted d-none d-sm-inline" style="font-size: 10px;">•</span>
                   <span class="session-macro-tag">
                     <span class="macro-dot macro-dot-fat me-1" style="background-color: #A84135 !important;"></span>Lemak: <strong class="text-dark">${fmtG(sF)}g</strong>
                   </span>
-                </div>
-
-                <div class="d-flex d-md-none align-items-center gap-2">
-                  <div class="text-end">
-                    <strong class="text-dark fs-6">${fmt(sCal)}</strong>
-                    <small class="text-secondary fw-normal ms-0.5" style="font-size: 11px;">kkal</small>
-                  </div>
-                  <div class="session-actions-group">
-                    <button type="button" class="btn btn-sm btn-subtle btn-edit-circle" onclick="startEditMeal(${m.id})" title="Edit & tambah makanan di sesi ini">
-                      <i class="bi bi-pencil" style="font-size: 13.5px;"></i>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-subtle text-danger btn-trash-circle" onclick="deleteHistoryMeal(${m.id})" title="Hapus sesi ini">
-                      <i class="bi bi-trash3" style="font-size: 13.5px;"></i>
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1751,4 +1740,115 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       if (bmrBarEl) bmrBarEl.style.width = `${bmrPct}%`;
       const aktBarEl = document.getElementById('prof-bar-akt');
       if (aktBarEl) aktBarEl.style.width = `${aktPct}%`;
+    }
+
+    // ==================== FITUR BARU: MINI PROGRESS RING, ONBOARDING, & PORSI TANGAN ====================
+
+    // 1. Mini Progress Ring Kalori Header dengan Warna Dinamis
+    function updateTopProgressRing(consumed, target) {
+      const ring = document.getElementById('top-user-progress-ring');
+      if (!ring) return;
+      target = target || 2000;
+      const ratio = Math.min((consumed || 0) / target, 1.0);
+      const circumference = 87.96; // 2 * PI * 14
+      const offset = circumference - (ratio * circumference);
+      ring.style.strokeDashoffset = offset;
+
+      const pct = target > 0 ? (consumed / target) * 100 : 0;
+      if (pct > 100) {
+        ring.setAttribute('stroke', '#A84135'); // Terracotta jika kalori melebihi batas
+      } else if (pct >= 85) {
+        ring.setAttribute('stroke', '#E7A93B'); // Amber jika mendekati batas target
+      } else {
+        ring.setAttribute('stroke', '#55734B'); // Olive jika dalam batas aman
+      }
+    }
+
+    // 2. Evaluasi Tampilan Banner Onboarding Pengguna Baru
+    function checkOnboardingVisibility(mealsCount) {
+      const onboardingCard = document.getElementById('dash-onboarding-card');
+      if (!onboardingCard) return;
+
+      const isDismissed = localStorage.getItem('porsi_onboarding_dismissed');
+      if (isDismissed === 'true') {
+        onboardingCard.classList.add('d-none');
+        return;
+      }
+
+      // Tampilkan jika belum pernah ada sesi tercatat atau belum menghitung target kalori
+      const isNewUser = (!currentUser || !currentUser.target_kalori_harian || currentUser.target_kalori_harian <= 0 || mealsCount === 0);
+      if (isNewUser) {
+        onboardingCard.classList.remove('d-none');
+      } else {
+        onboardingCard.classList.add('d-none');
+      }
+    }
+
+    function dismissOnboarding() {
+      localStorage.setItem('porsi_onboarding_dismissed', 'true');
+      const onboardingCard = document.getElementById('dash-onboarding-card');
+      if (onboardingCard) onboardingCard.classList.add('d-none');
+    }
+
+    // 3. Panduan Takaran Porsi Tangan Interaktif
+    function handleHandSliderInput(val) {
+      const gram = Number(val) || 100;
+      const valBadge = document.getElementById('hand-slider-val') || document.getElementById('hand-portion-val');
+      if (valBadge) valBadge.textContent = gram;
+
+      const badgeTop = document.getElementById('hand-estimate-badge');
+      const estText = document.getElementById('hand-slider-desc') || document.getElementById('hand-portion-estimation');
+
+      if (estText) {
+        if (gram <= 20) {
+          estText.innerHTML = `Setara sekitar <strong>1 ruas jempol</strong> (misal: mentega, minyak zaitun, selai).`;
+          if (badgeTop) badgeTop.textContent = `1 Jempol ≈ ${gram}g Lemak`;
+        } else if (gram <= 50) {
+          estText.innerHTML = `Setara sekitar <strong>2 jempol</strong> (misal: dressing salad, selai kacang, keju).`;
+          if (badgeTop) badgeTop.textContent = `2 Jempol ≈ ${gram}g Lemak/Saus`;
+        } else if (gram <= 85) {
+          estText.innerHTML = `Setara sekitar <strong>1 genggam tangan</strong> sayur atau buah potong (~80g).`;
+          if (badgeTop) badgeTop.textContent = `1 Genggam ≈ ${gram}g Sayuran`;
+        } else if (gram <= 110) {
+          estText.innerHTML = `Setara sekitar <strong>1 kepalan tangan</strong> nasi putih, kentang, atau pasta (~100g).`;
+          if (badgeTop) badgeTop.textContent = `1 Kepalan ≈ ${gram}g Karbohidrat`;
+        } else if (gram <= 150) {
+          estText.innerHTML = `Setara sekitar <strong>1 telapak tangan tebal</strong> daging, ayam, atau ikan (~100-120g).`;
+          if (badgeTop) badgeTop.textContent = `1 Telapak ≈ ${gram}g Protein`;
+        } else {
+          estText.innerHTML = `Setara porsi ekstra besar / <strong>2 kepalan tangan</strong> (~${gram}g).`;
+          if (badgeTop) badgeTop.textContent = `Porsi Besar ≈ ${gram}g`;
+        }
+      }
+
+      // Tandai tombol pill cepat yang sesuai
+      document.querySelectorAll('.hand-pill-btn').forEach(btn => {
+        const btnGram = Number(btn.getAttribute('data-gram') || (btn.onclick ? btn.getAttribute('onclick').match(/\d+/)?.[0] : 0));
+        if (Math.abs(btnGram - gram) <= 12) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function selectHandPreset(gram, label) {
+      const slider = document.getElementById('hand-portion-range');
+      if (slider) slider.value = gram;
+      handleHandSliderInput(gram);
+    }
+
+    function applyHandPortionToSelected() {
+      const slider = document.getElementById('hand-portion-range');
+      const gram = slider ? Number(slider.value) || 100 : 100;
+
+      // Cari input gramasi aktif di piring draf jika ada
+      const activeGramInput = document.querySelector('.draft-gram-input:focus') || document.querySelector('.draft-gram-input');
+      if (activeGramInput) {
+        activeGramInput.value = gram;
+        activeGramInput.dispatchEvent(new Event('input'));
+        toast(`Porsi tangan (${gram}g) berhasil diterapkan ke makanan.`);
+      } else {
+        toast(`Porsi tangan: ${gram}g. Tambahkan makanan ke piring untuk menerapkan.`);
+      }
     }
