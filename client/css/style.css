@@ -285,25 +285,26 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
-    /* 4. Kapsul Profil Pengguna Terautentikasi */
+    /* 4. Kapsul Profil Pengguna Terautentikasi (Proporsional & Nyaman Dilihat) */
     .nav-user-pill {
       background: #F4F6F0;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(85, 115, 75, 0.2);
       border-radius: 9999px;
-      padding: 3px 12px 3px 4px;
+      padding: 3px 10px 3px 4px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: all 0.18s ease;
     }
     .nav-user-pill:hover {
-      background: #E9ECE3;
+      background: #EAEFE4;
+      border-color: rgba(85, 115, 75, 0.35);
     }
 
     .nav-user-avatar-wrap {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -314,34 +315,63 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 34px;
-      height: 34px;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
     }
     .nav-user-avatar {
-      width: 24px;
-      height: 24px;
+      width: 21px;
+      height: 21px;
       border-radius: 50%;
       background: var(--olive);
       color: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11.5px;
+      font-size: 11px;
       z-index: 1;
+    }
+
+    .user-text-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      gap: 2px; /* Memberi ruang nafas bersih antara nama dan kalori agar tidak mepet/sumpek */
+    }
+
+    .user-name-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1E231C;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      max-width: 105px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-target-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      color: #697464;
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
 
     .btn-nav-logout {
       border: 1px solid var(--border);
       background: #FFFFFF;
       color: var(--danger);
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13.5px;
+      font-size: 13px;
       cursor: pointer;
       transition: all 0.18s ease;
     }
@@ -1309,10 +1339,21 @@
       }
       .app-navbar-pill {
         border-radius: 24px;
-        padding: 10px 14px;
+        padding: 8px 14px;
         flex-wrap: wrap;
         row-gap: 8px;
         min-height: auto;
+      }
+      .nav-user-pill {
+        padding: 2.5px 8px 2.5px 3.5px;
+        gap: 6px;
+      }
+      .user-name-label {
+        max-width: 85px;
+        font-size: 11.5px;
+      }
+      .user-target-label {
+        font-size: 10px;
       }
       .brand-logo {
         order: 1;
@@ -1407,11 +1448,41 @@
         height: 4px;
       }
       .nav-user-pill {
-        padding: 3px 10px 3px 5px;
-        gap: 6px;
+        padding: 2.5px 8px 2.5px 3.5px !important;
+        gap: 6px !important;
       }
+      .nav-user-avatar-wrap {
+        width: 28px !important;
+        height: 28px !important;
+      }
+      .nav-user-avatar {
+        width: 19px !important;
+        height: 19px !important;
+        font-size: 10px !important;
+      }
+      .user-text-block {
+        gap: 1.5px !important;
+      }
+      .nav-user-pill .user-name-label,
       .nav-user-pill #top-user-name {
-        max-width: 80px;
+        max-width: 75px !important;
+        font-size: 11px !important;
+        line-height: 1.15 !important;
+      }
+      .nav-user-pill .user-target-label,
+      .nav-user-pill #top-user-target {
+        font-size: 9.5px !important;
+        line-height: 1.1 !important;
+      }
+      .btn-nav-logout {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 12px !important;
+      }
+      .profile-avatar-circle {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 18px !important;
       }
 
       /* Hero Section Smartphone */
@@ -1583,20 +1654,41 @@
         white-space: nowrap;
       }
       .nav-user-pill {
-        padding: 3px 6px 3px 4px;
-        gap: 5px;
+        padding: 2px 7px 2px 3px !important;
+        gap: 5px !important;
       }
-      .nav-user-pill #top-user-name {
-        max-width: 60px !important;
-        font-size: 11px !important;
+      .nav-user-avatar-wrap {
+        width: 26px !important;
+        height: 26px !important;
       }
-      .nav-user-pill #top-user-target {
+      .nav-user-avatar {
+        width: 18px !important;
+        height: 18px !important;
         font-size: 9.5px !important;
       }
+      .user-text-block {
+        gap: 1.5px !important;
+      }
+      .nav-user-pill .user-name-label,
+      .nav-user-pill #top-user-name {
+        max-width: 65px !important;
+        font-size: 10.5px !important;
+        line-height: 1.15 !important;
+      }
+      .nav-user-pill .user-target-label,
+      .nav-user-pill #top-user-target {
+        font-size: 9px !important;
+        line-height: 1.1 !important;
+      }
       .btn-nav-logout {
-        width: 30px;
-        height: 30px;
-        font-size: 12px;
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 11px !important;
+      }
+      .profile-avatar-circle {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 16px !important;
       }
       .btn-nav-ghost {
         padding: 4px 8px;
