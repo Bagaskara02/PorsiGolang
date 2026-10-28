@@ -220,7 +220,26 @@
     .auth-form-header {
       text-align: center;
       width: 100%;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
+    }
+
+    /* Kotak Peringatan Validasi & Error Autentikasi (Margin Atas-Bawah Seimbang & Rapi) */
+    .auth-error-alert {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 12px;
+      margin-top: 4px;
+      margin-bottom: 14px;
+      border-radius: 9px;
+      font-size: 11.5px;
+      line-height: 1.45;
+      background-color: #FDF2F1;
+      border: 1px solid #F6D5D2;
+      color: #9C2E23;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .auth-brand {

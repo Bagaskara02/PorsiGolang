@@ -361,6 +361,43 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       }
     }
 
+    function cleanErrorMessage(msg) {
+      if (!msg) return 'Terjadi kesalahan, silakan periksa data Anda.';
+      if (typeof msg !== 'string') return String(msg);
+
+      // Tangani fallback jika backend mengembalikan validator tag mentah
+      if (msg.includes('RegisterRequest.Username') && msg.includes("'min' tag")) {
+        return 'Username minimal 3 karakter.';
+      }
+      if (msg.includes('RegisterRequest.Password') && msg.includes("'min' tag")) {
+        return 'Password minimal 8 karakter.';
+      }
+      if (msg.includes('RegisterRequest.Email')) {
+        return 'Format email tidak valid (contoh: budi@mail.com).';
+      }
+      if (msg.includes('RegisterRequest.NamaLengkap')) {
+        return 'Nama lengkap wajib diisi.';
+      }
+      if (msg.includes('credentials.Username') && msg.includes("'min' tag")) {
+        return 'Username minimal 3 karakter.';
+      }
+      if (msg.includes('credentials.Password') && msg.includes("'min' tag")) {
+        return 'Password minimal 8 karakter.';
+      }
+
+      // Bersihkan prefix teknis
+      let clean = msg.replace(/^Format data tidak valid:\s*/i, '');
+      return clean.trim();
+    }
+
+    function showAuthError(elId, msg) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const clean = cleanErrorMessage(msg);
+      el.innerHTML = `<i class="bi bi-exclamation-circle-fill flex-shrink-0" style="font-size: 13.5px;"></i><span>${clean}</span>`;
+      el.classList.remove('d-none');
+    }
+
     async function submitLogin(e) {
       e.preventDefault();
       const u = document.getElementById('login-user').value.trim();
@@ -368,9 +405,19 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       const btn = document.getElementById('btn-submit-login');
       const errMsg = document.getElementById('login-error-msg');
 
+      errMsg.classList.add('d-none');
+
+      if (!u || u.length < 3) {
+        showAuthError('login-error-msg', 'Username minimal 3 karakter.');
+        return;
+      }
+      if (!p || p.length < 8) {
+        showAuthError('login-error-msg', 'Password minimal 8 karakter.');
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Memproses...';
-      errMsg.classList.add('d-none');
 
       try {
         const res = await apiCall('/api/auth/login', {
@@ -384,11 +431,10 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         toast('Berhasil masuk.');
         await checkCurrentSession();
       } catch (err) {
-        errMsg.textContent = err.message || 'Username atau password salah.';
-        errMsg.classList.remove('d-none');
+        showAuthError('login-error-msg', err.message || 'Username atau password salah.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Masuk';
+        btn.textContent = 'Masuk ke Akun';
       }
     }
 
@@ -396,6 +442,8 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       e.preventDefault();
       const btn = document.getElementById('btn-submit-reg');
       const errMsg = document.getElementById('reg-error-msg');
+
+      errMsg.classList.add('d-none');
 
       const body = {
         username: document.getElementById('reg-username').value.trim(),
@@ -409,9 +457,34 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         tingkat_aktivitas: document.getElementById('reg-akt').value
       };
 
+      // Validasi client-side yang ramah dan manusiawi
+      if (!body.username || body.username.length < 3) {
+        showAuthError('reg-error-msg', 'Username minimal 3 karakter.');
+        return;
+      }
+      if (!body.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+        showAuthError('reg-error-msg', 'Format email tidak valid (contoh: budi@mail.com).');
+        return;
+      }
+      if (!body.password || body.password.length < 8) {
+        showAuthError('reg-error-msg', 'Password minimal 8 karakter.');
+        return;
+      }
+      if (!body.nama_lengkap) {
+        showAuthError('reg-error-msg', 'Nama lengkap wajib diisi.');
+        return;
+      }
+      if (isNaN(body.usia) || body.usia < 10 || body.usia > 120) {
+        showAuthError('reg-error-msg', 'Usia harus antara 10 hingga 120 tahun.');
+        return;
+      }
+      if (isNaN(body.berat_badan) || body.berat_badan <= 0 || isNaN(body.tinggi_badan) || body.tinggi_badan <= 0) {
+        showAuthError('reg-error-msg', 'Berat dan tinggi badan harus lebih dari 0.');
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Mendaftarkan...';
-      errMsg.classList.add('d-none');
 
       try {
         await apiCall('/api/auth/register', { method: 'POST', body: JSON.stringify(body) });
@@ -426,8 +499,7 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
         toast('Pendaftaran berhasil.');
         await checkCurrentSession();
       } catch (err) {
-        errMsg.textContent = err.message || 'Gagal mendaftar.';
-        errMsg.classList.remove('d-none');
+        showAuthError('reg-error-msg', err.message || 'Gagal mendaftar. Silakan periksa kembali data Anda.');
       } finally {
         btn.disabled = false;
         btn.textContent = 'Daftar & Hitung Target';
