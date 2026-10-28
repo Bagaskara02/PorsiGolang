@@ -26,7 +26,12 @@
 
             <div class="mb-3 w-100 text-start">
               <label class="form-label" for="login-pass">Password</label>
-              <input type="password" class="form-control" id="login-pass" required autocomplete="current-password" placeholder="Masukkan password">
+              <div class="position-relative">
+                <input type="password" class="form-control pe-5" id="login-pass" required autocomplete="current-password" placeholder="Masukkan password">
+                <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('login-pass', this)" aria-label="Tampilkan password" title="Tampilkan password">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
             </div>
 
             <button type="submit" class="btn btn-olive w-100 py-2 mt-2" id="btn-submit-login">
@@ -63,7 +68,12 @@
             <div class="row g-2 mb-2 w-100 text-start">
               <div class="col-6">
                 <label class="form-label" for="reg-pass">Password (Min. 8)</label>
-                <input type="password" class="form-control form-control-sm" id="reg-pass" required minlength="8" placeholder="••••••••">
+                <div class="position-relative">
+                  <input type="password" class="form-control form-control-sm pe-5" id="reg-pass" required minlength="8" placeholder="••••••••">
+                  <button type="button" class="btn-toggle-password btn-toggle-password-sm" onclick="togglePasswordVisibility('reg-pass', this)" aria-label="Tampilkan password" title="Tampilkan password">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
               </div>
               <div class="col-6">
                 <label class="form-label" for="reg-nama">Nama Lengkap</label>

@@ -14,8 +14,10 @@ func NewService(repo *Repository) *Service {
 }
 
 func (s *Service) List(ctx context.Context, search string, page, limit int) ([]Makanan, int64, error) {
-	if limit <= 0 || limit > 100 {
+	if limit <= 0 {
 		limit = 20
+	} else if limit > 2000 {
+		limit = 2000
 	}
 	if page <= 0 {
 		page = 1

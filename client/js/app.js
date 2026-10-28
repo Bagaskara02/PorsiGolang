@@ -361,6 +361,30 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       }
     }
 
+    // Toggle Tampilkan / Sembunyikan Password
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) {
+          icon.classList.remove('bi-eye');
+          icon.classList.add('bi-eye-slash');
+        }
+        btn.setAttribute('title', 'Sembunyikan password');
+        btn.setAttribute('aria-label', 'Sembunyikan password');
+      } else {
+        input.type = 'password';
+        if (icon) {
+          icon.classList.remove('bi-eye-slash');
+          icon.classList.add('bi-eye');
+        }
+        btn.setAttribute('title', 'Tampilkan password');
+        btn.setAttribute('aria-label', 'Tampilkan password');
+      }
+    }
+
     function cleanErrorMessage(msg) {
       if (!msg) return 'Terjadi kesalahan, silakan periksa data Anda.';
       if (typeof msg !== 'string') return String(msg);
@@ -1132,13 +1156,14 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       list.innerHTML = '<div class="p-3 text-center text-secondary small">Memuat daftar makanan...</div>';
 
       try {
-        // Ambil seluruh makanan (hingga 100 item) agar pengguna bisa menggulir bebas tanpa terpotong
-        const res = await apiCall(`/api/public/makanan?search=${encodeURIComponent(q)}&limit=100`);
+        // Ambil seluruh makanan di database secara dinamis tanpa terpotong limit kaku
+        const res = await apiCall(`/api/public/makanan?search=${encodeURIComponent(q)}&limit=2000`);
         const items = res.data || [];
+        const totalCount = (res.total !== undefined && res.total !== null) ? res.total : items.length;
 
         if (countBadge) {
           if (!q) {
-            countBadge.innerHTML = `Menampilkan seluruh <strong>${items.length}</strong> makanan`;
+            countBadge.innerHTML = `Menampilkan seluruh <strong>${totalCount}</strong> makanan`;
           } else {
             countBadge.innerHTML = `Ditemukan <strong>${items.length}</strong> hasil untuk "<em>${q}</em>"`;
           }
