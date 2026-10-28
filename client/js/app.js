@@ -91,6 +91,9 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       const toastEl = document.getElementById('simpleToast');
       if (toastEl) appToast = new bootstrap.Toast(toastEl, { delay: 3000 });
 
+      const remEl = document.getElementById('modalReminderSuccess');
+      if (remEl) modalReminderSuccess = new bootstrap.Modal(remEl);
+
       // 3. Inisialisasi Nilai Tanggal Hari Ini
       const todayStr = getTodayISO();
       const plateDateInput = document.getElementById('plate-date-input');
@@ -1885,4 +1888,74 @@ const API_BASE = (window.location.hostname === 'localhost' || window.location.ho
       localStorage.setItem('porsi_onboarding_dismissed', 'true');
       const onboardingCard = document.getElementById('dash-onboarding-card');
       if (onboardingCard) onboardingCard.classList.add('d-none');
+    }
+
+    // ==================== FITUR PENGINGAT KALORI ETHEREAL EMAIL ====================
+    let modalReminderSuccess;
+
+    async function triggerCalorieReminder() {
+      if (!currentUser) {
+        toast('Silakan masuk akun terlebih dahulu.');
+        return;
+      }
+
+      const btn = document.getElementById('btn-trigger-reminder');
+      const originalHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" style="width: 12px; height: 12px;"></span> Memeriksa...';
+      }
+
+      try {
+        const res = await apiCall('/api/private/reminder/send', { method: 'POST' });
+        if (res.status === 'achieved') {
+          toast(res.message || 'Target kalori hari ini sudah terpenuhi!');
+        } else if (res.status === 'sent') {
+          const data = res.data || {};
+          showReminderSuccessModal(data);
+        } else {
+          toast(res.message || 'Pemeriksaan pengingat kalori selesai.');
+        }
+      } catch (err) {
+        toast('Gagal mengirim pengingat: ' + err.message);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalHtml;
+        }
+      }
+    }
+
+    function showReminderSuccessModal(data) {
+      const to = data.to || (currentUser ? currentUser.email : '-');
+      const deficit = data.deficit || 0;
+      const senderUser = data.sender_user || 'Ethereal Mailer';
+      const senderPass = data.sender_pass || '-';
+      const previewUrl = data.preview_url || 'https://ethereal.email/messages';
+
+      const descEl = document.getElementById('reminder-modal-desc');
+      if (descEl) {
+        descEl.innerHTML = `Notifikasi pengingat defisit kalori (<strong>${fmt(deficit)} kkal</strong>) telah dikirimkan ke email pendaftaranmu: <strong>${to}</strong>.`;
+      }
+
+      const infoEl = document.getElementById('reminder-modal-info');
+      if (infoEl) {
+        infoEl.innerHTML = `
+          <div class="mb-1 text-secondary"><strong>Layanan:</strong> Ethereal Email (Auto-Generated SMTP)</div>
+          <div class="mb-1 text-secondary"><strong>Email Tujuan:</strong> <span class="text-dark fw-medium">${to}</span></div>
+          <div class="mb-1 text-secondary"><strong>Akun Pengirim Ethereal:</strong> <code>${senderUser}</code></div>
+          <div class="text-secondary"><strong>Kata Sandi Ethereal:</strong> <code>${senderPass}</code></div>
+        `;
+      }
+
+      const linkEl = document.getElementById('reminder-preview-link');
+      if (linkEl) {
+        linkEl.href = previewUrl;
+      }
+
+      if (modalReminderSuccess) {
+        modalReminderSuccess.show();
+      } else {
+        toast(`Pengingat kalori terkirim ke ${to}!`);
+      }
     }

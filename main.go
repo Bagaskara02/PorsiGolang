@@ -17,6 +17,7 @@ import (
 	"backend/internal/piring"
 	"backend/internal/private"
 	"backend/internal/public"
+	"backend/internal/reminder"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -63,7 +64,11 @@ func setupEngine(db *gorm.DB, secret []byte) *gin.Engine {
 	piringRepo := piring.NewRepository(db)
 	piringService := piring.NewService(piringRepo)
 	piringHandler := piring.NewHandler(piringService)
-	private.RegisterRoutes(r, authHandler.RequireAuth(), piringHandler)
+
+	// 4. Modul Notifikasi Pengingat Kalori Harian (Ethereal Email)
+	reminderService := reminder.NewService()
+	reminderHandler := reminder.NewHandler(reminderService, piringService)
+	private.RegisterRoutes(r, authHandler.RequireAuth(), piringHandler, reminderHandler)
 
 	// 4. Layani File Statis Frontend (Client)
 	clientDir := "./client"
